@@ -15,8 +15,8 @@ type Environments struct {
 	MODE Environment
 }
 
-func LoadEnvironmentsFromEnvFile(envFilePath ...string) {
-	err := godotenv.Load(envFilePath...)
+func LoadEnvironmentsFromEnvFile() {
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Println("cannot load environments from given env file")
 	}

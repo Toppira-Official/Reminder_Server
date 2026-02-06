@@ -15,19 +15,11 @@ func init() {
 func main() {
 	fx.
 		New(
-			fx.Provide(
-				configs.GetEnvironments,
-				configs.NewHttpServer,
-				configs.NewLogger,
-				configs.NewDB,
-				configs.NewQuery,
-			),
-			fx.Invoke(
-				scripts.LoadMigrations,
-			),
 			fx.WithLogger(func(logger *zap.Logger) fxevent.Logger {
 				return &fxevent.ZapLogger{Logger: logger}
 			}),
+			configs.Module,
+			scripts.Module,
 		).
 		Run()
 }

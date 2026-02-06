@@ -30,6 +30,17 @@ const docTemplate = `{
                     "Authentication"
                 ],
                 "summary": "sign up with email and password",
+                "parameters": [
+                    {
+                        "description": "Sign Up Input",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.SignUpWithEmailPasswordInput"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -54,6 +65,21 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "handler.SignUpWithEmailPasswordInput": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
         "handler.SignUpWithEmailPasswordOutput": {
             "type": "object",
             "properties": {

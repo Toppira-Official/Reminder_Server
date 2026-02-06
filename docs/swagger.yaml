@@ -1,4 +1,14 @@
 definitions:
+  handler.SignUpWithEmailPasswordInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
   handler.SignUpWithEmailPasswordOutput:
     properties:
       data:
@@ -20,6 +30,13 @@ paths:
     post:
       consumes:
       - application/json
+      parameters:
+      - description: Sign Up Input
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.SignUpWithEmailPasswordInput'
       produces:
       - application/json
       responses:

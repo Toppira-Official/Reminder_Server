@@ -21,9 +21,10 @@ func NewSignUpHandler(createUserUsecase userUsecase.CreateUserUsecase) *SignUpHa
 //	@Tags		Authentication
 //	@Accept		json
 //	@Produce	json
-//	@Success	200	{object}	SignUpWithEmailPasswordOutput
-//	@Failure	400	{object}	SignUpWithEmailPasswordOutput
-//	@Failure	500	{object}	SignUpWithEmailPasswordOutput
+//	@Param		body	body		SignUpWithEmailPasswordInput	true	"Sign Up Input"
+//	@Success	200		{object}	SignUpWithEmailPasswordOutput
+//	@Failure	400		{object}	SignUpWithEmailPasswordOutput
+//	@Failure	500		{object}	SignUpWithEmailPasswordOutput
 //	@Router		/auth/sign-up-with-user-password [post]
 func (hl *SignUpHandler) SignUpWithEmailPassword(c *gin.Context) {
 	var input SignUpWithEmailPasswordInput
@@ -34,7 +35,16 @@ func (hl *SignUpHandler) SignUpWithEmailPassword(c *gin.Context) {
 
 	user, err := hl.createUserUsecase.Execute(c.Request.Context(), input.MapUser())
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, SignUpWithEmailPasswordOutput{Message: err.Error()})
+		var statusCode int
+
+		switch err {
+		case userUsecase.ErrUserAlreadyExists:
+			statusCode = http.StatusConflict
+		default:
+			statusCode = http.StatusInternalServerError
+		}
+
+		c.JSON(statusCode, SignUpWithEmailPasswordOutput{Message: err.Error()})
 		return
 	}
 

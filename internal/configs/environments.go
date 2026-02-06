@@ -25,8 +25,12 @@ func LoadEnvironmentsFromEnvFile() {
 func GetEnvironments() Environments {
 	return Environments{
 		PORT: Environment(os.Getenv("PORT")).orDefault("3000"),
-		MODE: Environment(os.Getenv("MODE")).orPanic().MustBeIn("develop", "production"),
+		MODE: Environment(os.Getenv("MODE")).orPanic().mustBeIn("develop", "production"),
 	}
+}
+
+func (env Environment) String() string {
+	return string(env)
 }
 
 func (env Environment) orDefault(defaultValue string) Environment {
@@ -45,7 +49,7 @@ func (env Environment) orPanic() Environment {
 	return env
 }
 
-func (env Environment) MustBeIn(allowedValues ...string) Environment {
+func (env Environment) mustBeIn(allowedValues ...string) Environment {
 	doesContain := slices.Contains(allowedValues, string(env))
 
 	if doesContain {

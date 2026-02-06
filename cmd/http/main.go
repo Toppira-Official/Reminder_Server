@@ -10,6 +10,7 @@ func main() {
 		New(
 			fx.Provide(
 				configs.GetEnvironments,
+				configs.NewHttpServer,
 			),
 			fx.Invoke(
 				configs.LoadEnvironmentsFromEnvFile,

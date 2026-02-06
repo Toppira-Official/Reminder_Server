@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/Toppira-Official/backend/internal/domain/entities"
+	"github.com/glebarez/sqlite"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
-	"gorm.io/driver/sqlite"
+
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
@@ -26,12 +26,12 @@ func NewDB(lc fx.Lifecycle, envs Environments, log *zap.Logger) *gorm.DB {
 		zap.NewStdLog(log),
 		logger.Config{
 			SlowThreshold: time.Second,
-			LogLevel:      logger.Error,
+			LogLevel:      logger.Info,
 			Colorful:      false,
 		},
 	)
 
-	db, err := gorm.Open(sqlite.Open(sqliteFileName+"?_journal_mode=WAL&_foreign_keys=ON&_busy_timeout=5000"),
+	db, err := gorm.Open(sqlite.Open(sqliteFileName),
 		&gorm.Config{
 			Logger:                                   gormLogger,
 			PrepareStmt:                              true,
@@ -40,6 +40,10 @@ func NewDB(lc fx.Lifecycle, envs Environments, log *zap.Logger) *gorm.DB {
 	if err != nil {
 		log.Fatal("failed to connect to db", zap.Error(err))
 	}
+
+	db.Exec("PRAGMA journal_mode = WAL;")
+	db.Exec("PRAGMA foreign_keys = ON;")
+	db.Exec("PRAGMA busy_timeout = 5000;")
 
 	sqlDB, err := db.DB()
 	if err != nil {
@@ -52,13 +56,6 @@ func NewDB(lc fx.Lifecycle, envs Environments, log *zap.Logger) *gorm.DB {
 
 	lc.Append(
 		fx.Hook{
-			OnStart: func(ctx context.Context) error {
-				log.Info("running database migrations")
-				return db.AutoMigrate(
-					&entities.User{},
-					&entities.Reminder{},
-				)
-			},
 			OnStop: func(ctx context.Context) error {
 				log.Info("closing database connection")
 				return sqlDB.Close()

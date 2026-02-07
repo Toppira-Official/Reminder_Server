@@ -11,8 +11,10 @@ import (
 type Environment string
 
 type Environments struct {
-	PORT Environment
-	MODE Environment
+	PORT                 Environment
+	MODE                 Environment
+	JWT_SECRET           Environment
+	JWT_EXPIRES_IN_HOURS Environment
 }
 
 func LoadEnvironmentsFromEnvFile() {
@@ -24,8 +26,10 @@ func LoadEnvironmentsFromEnvFile() {
 
 func GetEnvironments() Environments {
 	return Environments{
-		PORT: Environment(os.Getenv("PORT")).orDefault("3000"),
-		MODE: Environment(os.Getenv("MODE")).orPanic().mustBeIn("develop", "production"),
+		PORT:                 Environment(os.Getenv("PORT")).orDefault("3000"),
+		MODE:                 Environment(os.Getenv("MODE")).orPanic().mustBeIn("develop", "production"),
+		JWT_SECRET:           Environment(os.Getenv("JWT_SECRET")).orPanic(),
+		JWT_EXPIRES_IN_HOURS: Environment(os.Getenv("JWT_EXPIRES_IN_HOURS")).orPanic(),
 	}
 }
 

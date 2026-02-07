@@ -1,0 +1,46 @@
+name: Go CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.25.6"
+
+      - name: Install golangci-lint
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $GOPATH/bin v1.58.0
+          export PATH=$GOPATH/bin:$PATH
+
+      - name: Run gofmt
+        run: |
+          fmt_files=$(gofmt -l .)
+          if [ -n "$fmt_files" ]; then
+            echo "Go files are not formatted:"
+            echo "$fmt_files"
+            exit 1
+          fi
+
+      - name: Run goimports
+        run: |
+          imp_files=$(goimports -l .)
+          if [ -n "$imp_files" ]; then
+            echo "Go import statements need fixing:"
+            echo "$imp_files"
+            exit 1
+          fi
+
+      - name: Run golangci-lint
+        run: golangci-lint run

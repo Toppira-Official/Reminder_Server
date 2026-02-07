@@ -11,18 +11,20 @@ vendor/
 *.log
 *.tmp
 
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+
 # OS files
 .DS_Store
 Thumbs.db
 
 # Database files
 *.db*
-*.sqlite*
-*.sqlite3*
 
 # Environment
-.env
-.env.*
+.env*
 
 # Git & project files
 .gitignore

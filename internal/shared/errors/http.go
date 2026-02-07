@@ -11,6 +11,10 @@ var httpStatusByCode = map[ErrCode]int{
 	ErrUserInvalidData:   http.StatusBadRequest,
 	ErrUserAlreadyExists: http.StatusConflict,
 	ErrUserNotFound:      http.StatusNotFound,
+
+	// Auth Errors
+	ErrAuthInvalidToken: http.StatusUnauthorized,
+	ErrAuthExpiredToken: http.StatusUnauthorized,
 }
 
 func HTTPStatus(code ErrCode) int {

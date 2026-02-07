@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Toppira-Official/backend/internal/configs"
+	apperrors "github.com/Toppira-Official/backend/internal/shared/errors"
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -29,11 +30,11 @@ func (uc *verifyJwtUsecase) Execute(ctx context.Context, tokenString string) (*j
 		return []byte(uc.envs.JWT_SECRET.String()), nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, apperrors.E(apperrors.ErrAuthInvalidToken, err)
 	}
 
 	if !token.Valid {
-		return nil, fmt.Errorf("invalid token")
+		return nil, apperrors.E(apperrors.ErrAuthExpiredToken)
 	}
 
 	return claims, nil

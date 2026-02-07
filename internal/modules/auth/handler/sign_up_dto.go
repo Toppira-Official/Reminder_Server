@@ -3,8 +3,8 @@ package handler
 import "github.com/Toppira-Official/backend/internal/shared/entities"
 
 type SignUpWithEmailPasswordInput struct {
-	Email    string `binding:"required,email" json:"email"`
-	Password string `binding:"required,min=8,max=72" json:"password"`
+	Email    string `binding:"required,email" json:"email" example:"user@example.com"`
+	Password string `binding:"required,min=8,max=72" json:"password" example:"StrongPassword1234"`
 }
 
 func (in *SignUpWithEmailPasswordInput) MapUser() *entities.User {

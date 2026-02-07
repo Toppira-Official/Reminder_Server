@@ -3,36 +3,41 @@ definitions:
     properties:
       data:
         additionalProperties: {}
+        description: swagger:example {"data":{"id":"123","email":"user@example.com"}}
         type: object
     type: object
   github_com_Toppira-Official_backend_internal_shared_errors.ClientError:
     properties:
       error:
-        $ref: '#/definitions/github_com_Toppira-Official_backend_internal_shared_errors.ErrCode'
+        allOf:
+        - $ref: '#/definitions/github_com_Toppira-Official_backend_internal_shared_errors.ErrCode'
+        example: SERVER_NOT_RESPONDING
     type: object
   github_com_Toppira-Official_backend_internal_shared_errors.ErrCode:
     enum:
-    - SERVER_INTERNAL_ERROR
-    - SERVER_NOT_RESPONDING
     - USER_INVALID_DATA
     - USER_ALREADY_EXISTS
     - USER_NOT_FOUND
+    - SERVER_INTERNAL_ERROR
+    - SERVER_NOT_RESPONDING
     - AUTH_INVALID_TOKEN
     - AUTH_EXPIRED_TOKEN
     type: string
     x-enum-varnames:
-    - ErrServerInternalError
-    - ErrServerNotResponding
     - ErrUserInvalidData
     - ErrUserAlreadyExists
     - ErrUserNotFound
+    - ErrServerInternalError
+    - ErrServerNotResponding
     - ErrAuthInvalidToken
     - ErrAuthExpiredToken
   internal_modules_auth_handler.SignUpWithEmailPasswordInput:
     properties:
       email:
+        example: user@example.com
         type: string
       password:
+        example: StrongPassword1234
         maxLength: 72
         minLength: 8
         type: string

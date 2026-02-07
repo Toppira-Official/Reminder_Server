@@ -69,6 +69,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "data": {
+                    "description": "swagger:example {\"data\":{\"id\":\"123\",\"email\":\"user@example.com\"}}",
                     "type": "object",
                     "additionalProperties": {}
                 }
@@ -78,27 +79,32 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "error": {
-                    "$ref": "#/definitions/github_com_Toppira-Official_backend_internal_shared_errors.ErrCode"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/github_com_Toppira-Official_backend_internal_shared_errors.ErrCode"
+                        }
+                    ],
+                    "example": "SERVER_NOT_RESPONDING"
                 }
             }
         },
         "github_com_Toppira-Official_backend_internal_shared_errors.ErrCode": {
             "type": "string",
             "enum": [
-                "SERVER_INTERNAL_ERROR",
-                "SERVER_NOT_RESPONDING",
                 "USER_INVALID_DATA",
                 "USER_ALREADY_EXISTS",
                 "USER_NOT_FOUND",
+                "SERVER_INTERNAL_ERROR",
+                "SERVER_NOT_RESPONDING",
                 "AUTH_INVALID_TOKEN",
                 "AUTH_EXPIRED_TOKEN"
             ],
             "x-enum-varnames": [
-                "ErrServerInternalError",
-                "ErrServerNotResponding",
                 "ErrUserInvalidData",
                 "ErrUserAlreadyExists",
                 "ErrUserNotFound",
+                "ErrServerInternalError",
+                "ErrServerNotResponding",
                 "ErrAuthInvalidToken",
                 "ErrAuthExpiredToken"
             ]
@@ -111,12 +117,14 @@ const docTemplate = `{
             ],
             "properties": {
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "user@example.com"
                 },
                 "password": {
                     "type": "string",
                     "maxLength": 72,
-                    "minLength": 8
+                    "minLength": 8,
+                    "example": "StrongPassword1234"
                 }
             }
         }

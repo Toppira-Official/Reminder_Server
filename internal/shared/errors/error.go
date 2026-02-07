@@ -3,7 +3,7 @@ package errors
 type ErrCode string
 
 type ClientError struct {
-	Code ErrCode `json:"error"`
+	Code ErrCode `json:"error" example:"SERVER_NOT_RESPONDING"`
 }
 type AppError struct {
 	ClientError

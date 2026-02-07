@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Toppira-Official/backend/internal/shared/middlewares"
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
@@ -29,6 +30,7 @@ func NewHttpServer(lc fx.Lifecycle, envs Environments, logger *zap.Logger) *gin.
 
 	engine.Use(ginzap.Ginzap(logger, time.RFC3339, true))
 	engine.Use(ginzap.RecoveryWithZap(logger, true))
+	engine.Use(middlewares.ErrorHandler(logger))
 
 	srv := &http.Server{
 		Addr:    httpServerPortNumber(envs.PORT.String()),

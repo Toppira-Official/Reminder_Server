@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strings"
 
 	authUsecase "github.com/Toppira-Official/backend/internal/modules/auth/usecase"
 	userUsecase "github.com/Toppira-Official/backend/internal/modules/user/usecase"
@@ -51,6 +52,7 @@ func (hl *SignUpHandler) SignUpWithEmailPassword(c *gin.Context) {
 		return
 	}
 
+	input.Email = strings.ToLower(input.Email)
 	input.Password = hashedPassword
 	user, err := hl.createUserUsecase.Execute(ctx, input.MapUser())
 	if err != nil {

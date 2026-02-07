@@ -4,7 +4,7 @@ import "github.com/Toppira-Official/backend/internal/shared/entities"
 
 type SignUpWithEmailPasswordInput struct {
 	Email    string `binding:"required,email" json:"email"`
-	Password string `binding:"required,min=8" json:"password"`
+	Password string `binding:"required,min=8,max=72" json:"password"`
 }
 
 func (in *SignUpWithEmailPasswordInput) MapUser() *entities.User {

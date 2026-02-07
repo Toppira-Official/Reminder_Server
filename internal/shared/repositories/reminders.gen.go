@@ -17,7 +17,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"github.com/Toppira-Official/backend/internal/domain/entities"
+	"github.com/Toppira-Official/backend/internal/shared/entities"
 )
 
 func newReminder(db *gorm.DB, opts ...gen.DOOption) reminder {

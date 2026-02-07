@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/Toppira-Official/backend/internal/domain/entities"
+	"github.com/Toppira-Official/backend/internal/shared/entities"
 	"gorm.io/gen"
 )
 
 func main() {
 	g := gen.NewGenerator(gen.Config{
-		OutPath: "internal/domain/repositories",
+		OutPath: "internal/shared/repositories",
 		Mode: gen.WithDefaultQuery |
 			gen.WithQueryInterface,
 	})

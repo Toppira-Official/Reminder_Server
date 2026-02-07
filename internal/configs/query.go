@@ -1,7 +1,7 @@
 package configs
 
 import (
-	"github.com/Toppira-Official/backend/internal/domain/repositories"
+	"github.com/Toppira-Official/backend/internal/shared/repositories"
 	"gorm.io/gorm"
 )
 

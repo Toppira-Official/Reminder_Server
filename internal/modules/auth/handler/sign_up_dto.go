@@ -1,6 +1,6 @@
 package handler
 
-import "github.com/Toppira-Official/backend/internal/domain/entities"
+import "github.com/Toppira-Official/backend/internal/shared/entities"
 
 type SignUpWithEmailPasswordInput struct {
 	Email    string `binding:"required,email" json:"email"`

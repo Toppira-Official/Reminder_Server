@@ -1,7 +1,7 @@
 package scripts
 
 import (
-	"github.com/Toppira-Official/backend/internal/domain/entities"
+	"github.com/Toppira-Official/backend/internal/shared/entities"
 	"gorm.io/gorm"
 )
 

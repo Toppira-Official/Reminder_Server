@@ -3,7 +3,7 @@ package entities
 import (
 	"time"
 
-	"github.com/Toppira-Official/backend/internal/domain/constants"
+	"github.com/Toppira-Official/backend/internal/shared/constants"
 	"gorm.io/datatypes"
 )
 

@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 
+	authUsecase "github.com/Toppira-Official/backend/internal/modules/auth/usecase"
 	userUsecase "github.com/Toppira-Official/backend/internal/modules/user/usecase"
 	"github.com/Toppira-Official/backend/internal/shared/dto"
 	apperrors "github.com/Toppira-Official/backend/internal/shared/errors"
@@ -11,12 +12,17 @@ import (
 )
 
 type SignUpHandler struct {
-	createUserUsecase userUsecase.CreateUserUsecase
-	logger            *zap.Logger
+	createUserUsecase   userUsecase.CreateUserUsecase
+	hashPasswordUsecase authUsecase.HashPasswordUsecase
+	logger              *zap.Logger
 }
 
-func NewSignUpHandler(createUserUsecase userUsecase.CreateUserUsecase) *SignUpHandler {
-	return &SignUpHandler{createUserUsecase: createUserUsecase}
+func NewSignUpHandler(createUserUsecase userUsecase.CreateUserUsecase,
+	hashPasswordUsecase authUsecase.HashPasswordUsecase) *SignUpHandler {
+	return &SignUpHandler{
+		createUserUsecase:   createUserUsecase,
+		hashPasswordUsecase: hashPasswordUsecase,
+	}
 }
 
 // SignUpWithEmailPassword godoc
@@ -31,15 +37,25 @@ func NewSignUpHandler(createUserUsecase userUsecase.CreateUserUsecase) *SignUpHa
 //	@Failure	500		{object}	apperrors.ClientError
 //	@Router		/auth/sign-up-with-user-password [post]
 func (hl *SignUpHandler) SignUpWithEmailPassword(c *gin.Context) {
+	ctx := c.Request.Context()
+
 	var input SignUpWithEmailPasswordInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.Error(apperrors.E(apperrors.ErrUserInvalidData, err))
 		return
 	}
 
-	user, err := hl.createUserUsecase.Execute(c.Request.Context(), input.MapUser())
+	hashedPassword, err := hl.hashPasswordUsecase.Execute(ctx, []byte(input.Password))
 	if err != nil {
 		c.Error(err)
+		return
+	}
+
+	input.Password = hashedPassword
+	user, err := hl.createUserUsecase.Execute(ctx, input.MapUser())
+	if err != nil {
+		c.Error(err)
+		return
 	}
 
 	c.JSON(http.StatusOK, dto.HttpOutputDto{

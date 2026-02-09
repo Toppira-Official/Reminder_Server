@@ -143,24 +143,24 @@
         "ErrCode": {
             "type": "string",
             "enum": [
+                "AUTH_INVALID_TOKEN",
+                "AUTH_EXPIRED_TOKEN",
+                "AUTH_INVALID_EMAIL_OR_PASSWORD",
                 "USER_INVALID_DATA",
                 "USER_ALREADY_EXISTS",
                 "USER_NOT_FOUND",
                 "SERVER_INTERNAL_ERROR",
-                "SERVER_NOT_RESPONDING",
-                "AUTH_INVALID_TOKEN",
-                "AUTH_EXPIRED_TOKEN",
-                "AUTH_INVALID_EMAIL_OR_PASSWORD"
+                "SERVER_NOT_RESPONDING"
             ],
             "x-enum-varnames": [
+                "ErrAuthInvalidToken",
+                "ErrAuthExpiredToken",
+                "ErrAuthInvalidEmailOrPassword",
                 "ErrUserInvalidData",
                 "ErrUserAlreadyExists",
                 "ErrUserNotFound",
                 "ErrServerInternalError",
-                "ErrServerNotResponding",
-                "ErrAuthInvalidToken",
-                "ErrAuthExpiredToken",
-                "ErrAuthInvalidEmailOrPassword"
+                "ErrServerNotResponding"
             ]
         },
         "HttpOutput": {

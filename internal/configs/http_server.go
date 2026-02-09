@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Toppira-Official/backend/internal/shared/middlewares"
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
@@ -17,9 +16,16 @@ type HttpServer struct {
 	envs Environments
 }
 
-func NewHttpServer(lc fx.Lifecycle, envs Environments, logger *zap.Logger) *gin.Engine {
-	engine := gin.New()
-	switch envs.MODE.String() {
+type HttpServerDeps struct {
+	fx.In
+
+	ErrorHandler gin.HandlerFunc `name:"error_handler"`
+	Envs         Environments
+	Logger       *zap.Logger
+}
+
+func NewHttpServer(lc fx.Lifecycle, d HttpServerDeps) *gin.Engine {
+	switch d.Envs.MODE.String() {
 	case "production":
 		gin.SetMode(gin.ReleaseMode)
 	case "develop":
@@ -27,28 +33,29 @@ func NewHttpServer(lc fx.Lifecycle, envs Environments, logger *zap.Logger) *gin.
 	default:
 		gin.SetMode(gin.DebugMode)
 	}
+	engine := gin.New()
 
-	engine.Use(ginzap.Ginzap(logger, time.RFC3339, true))
-	engine.Use(ginzap.RecoveryWithZap(logger, true))
-	engine.Use(middlewares.ErrorHandler(logger))
+	engine.Use(ginzap.Ginzap(d.Logger, time.RFC3339, true))
+	engine.Use(ginzap.RecoveryWithZap(d.Logger, true))
+	engine.Use(d.ErrorHandler)
 
 	srv := &http.Server{
-		Addr:    httpServerPortNumber(envs.PORT.String()),
+		Addr:    httpServerPortNumber(d.Envs.PORT.String()),
 		Handler: engine,
 	}
 
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			go func() {
-				logger.Info("http server started", zap.String("addr", srv.Addr))
+				d.Logger.Info("http server started", zap.String("addr", srv.Addr))
 				if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-					logger.Fatal("http server crashed", zap.Error(err))
+					d.Logger.Fatal("http server crashed", zap.Error(err))
 				}
 			}()
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			logger.Info("http server stopping...")
+			d.Logger.Info("http server stopping...")
 			return srv.Shutdown(ctx)
 		},
 	})

@@ -6,6 +6,12 @@ Backend service for the Toppira platform.
 
 ## 🚀 Developer Commands
 
+### 🏃 Start Dev Server
+
+```sh
+./scripts/start.sh
+```
+
 ### 📄 Generate API Documentation
 
 Generate Swagger/OpenAPI docs from annotations.

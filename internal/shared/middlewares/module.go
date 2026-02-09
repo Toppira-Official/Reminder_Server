@@ -9,5 +9,9 @@ var Module = fx.Module(
 			ErrorHandler,
 			fx.ResultTags(`name:"error_handler"`),
 		),
+		fx.Annotate(
+			GuardLogin,
+			fx.ResultTags(`name:"guard_login"`),
+		),
 	),
 )

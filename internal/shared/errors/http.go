@@ -15,6 +15,7 @@ var httpStatusByCode = map[ErrCode]int{
 	// Auth Errors
 	ErrAuthInvalidToken:           http.StatusUnauthorized,
 	ErrAuthExpiredToken:           http.StatusUnauthorized,
+	ErrAuthTokenNotProvided:       http.StatusUnauthorized,
 	ErrAuthInvalidEmailOrPassword: http.StatusBadRequest,
 }
 

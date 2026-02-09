@@ -26,6 +26,7 @@ func NewGetMeHandler() *GetMeHandler {
 //	@Failure	401	{object}	apperrors.ClientError
 //	@Failure	500	{object}	apperrors.ClientError
 //	@Failure	503	{object}	apperrors.ClientError
+//	@Security	BearerAuth
 //	@Router		/user/me [get]
 func (hl *GetMeHandler) GetMyInfo(c *gin.Context) {
 	userVal, exists := c.Get("user")

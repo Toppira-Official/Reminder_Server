@@ -26,6 +26,11 @@ func init() {
 //	@contact.name	Ali Moradi
 //	@contact.email	AliMoradi0Business@gmail.com
 
+//	@securityDefinitions.apikey	BearerAuth
+//	@in							header
+//	@name						Authorization
+//	@description				Type "Bearer" followed by a space and JWT token.
+
 // @host	localhost:3000
 func main() {
 	fx.

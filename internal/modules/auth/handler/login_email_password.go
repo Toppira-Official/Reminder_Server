@@ -40,7 +40,9 @@ func NewLoginHandler(
 //	@Param		body	body		input.LoginWithEmailPasswordInput	true	"Login Input"
 //	@Success	200		{object}	output.HttpOutput
 //	@Failure	400		{object}	apperrors.ClientError
+//	@Failure	404		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
+//	@Failure	503		{object}	apperrors.ClientError
 //	@Router		/auth/login-with-user-password [post]
 func (hl *LoginHandler) LoginWithEmailPassword(c *gin.Context) {
 	ctx := c.Request.Context()

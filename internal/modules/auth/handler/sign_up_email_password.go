@@ -37,9 +37,11 @@ func NewSignUpHandler(
 //	@Accept		json
 //	@Produce	json
 //	@Param		body	body		input.SignUpWithEmailPasswordInput	true	"Sign Up Input"
-//	@Success	200		{object}	output.HttpOutput
+//	@Success	201		{object}	output.HttpOutput
 //	@Failure	400		{object}	apperrors.ClientError
+//	@Failure	409		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
+//	@Failure	503		{object}	apperrors.ClientError
 //	@Router		/auth/sign-up-with-user-password [post]
 func (hl *SignUpHandler) SignUpWithEmailPassword(c *gin.Context) {
 	ctx := c.Request.Context()
@@ -72,7 +74,7 @@ func (hl *SignUpHandler) SignUpWithEmailPassword(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, output.HttpOutput{
+	c.JSON(http.StatusCreated, output.HttpOutput{
 		Data: map[string]any{
 			"user":         savedUser,
 			"access_token": accessToken,

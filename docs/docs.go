@@ -54,8 +54,20 @@ const docTemplate = `{
                             "$ref": "#/definitions/ClientError"
                         }
                     },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ClientError"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ClientError"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
                         "schema": {
                             "$ref": "#/definitions/ClientError"
                         }
@@ -87,8 +99,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/HttpOutput"
                         }
@@ -99,8 +111,20 @@ const docTemplate = `{
                             "$ref": "#/definitions/ClientError"
                         }
                     },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/ClientError"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ClientError"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
                         "schema": {
                             "$ref": "#/definitions/ClientError"
                         }
@@ -126,24 +150,24 @@ const docTemplate = `{
         "ErrCode": {
             "type": "string",
             "enum": [
-                "AUTH_INVALID_TOKEN",
-                "AUTH_EXPIRED_TOKEN",
-                "AUTH_INVALID_EMAIL_OR_PASSWORD",
-                "SERVER_INTERNAL_ERROR",
-                "SERVER_NOT_RESPONDING",
                 "USER_INVALID_DATA",
                 "USER_ALREADY_EXISTS",
-                "USER_NOT_FOUND"
+                "USER_NOT_FOUND",
+                "SERVER_INTERNAL_ERROR",
+                "SERVER_NOT_RESPONDING",
+                "AUTH_INVALID_TOKEN",
+                "AUTH_EXPIRED_TOKEN",
+                "AUTH_INVALID_EMAIL_OR_PASSWORD"
             ],
             "x-enum-varnames": [
-                "ErrAuthInvalidToken",
-                "ErrAuthExpiredToken",
-                "ErrAuthInvalidEmailOrPassword",
-                "ErrServerInternalError",
-                "ErrServerNotResponding",
                 "ErrUserInvalidData",
                 "ErrUserAlreadyExists",
-                "ErrUserNotFound"
+                "ErrUserNotFound",
+                "ErrServerInternalError",
+                "ErrServerNotResponding",
+                "ErrAuthInvalidToken",
+                "ErrAuthExpiredToken",
+                "ErrAuthInvalidEmailOrPassword"
             ]
         },
         "HttpOutput": {

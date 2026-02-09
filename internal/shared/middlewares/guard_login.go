@@ -1,17 +1,21 @@
 package middlewares
 
 import (
+	"strconv"
 	"strings"
 
 	authUsecase "github.com/Toppira-Official/backend/internal/modules/auth/usecase"
+	userUsecase "github.com/Toppira-Official/backend/internal/modules/user/usecase"
 	apperrors "github.com/Toppira-Official/backend/internal/shared/errors"
 	"github.com/gin-gonic/gin"
 )
 
 func GuardLogin(
 	verifyJwtUsecase authUsecase.VerifyJwtUsecase,
+	findUserByIDUsecase userUsecase.FindUserByIDUsecase,
 ) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		ctx := c.Request.Context()
 		authHeader := c.Request.Header.Get("Authorization")
 		if authHeader == "" {
 			appErr := &apperrors.AppError{ClientError: apperrors.ClientError{Code: apperrors.ErrAuthTokenNotProvided}}
@@ -37,7 +41,22 @@ func GuardLogin(
 			return
 		}
 
-		c.Set("userClaims", claims)
+		userID, err := strconv.Atoi(claims.Subject)
+		if err != nil {
+			appErr := &apperrors.AppError{ClientError: apperrors.ClientError{Code: apperrors.ErrAuthInvalidToken}}
+			c.JSON(apperrors.HTTPStatus(appErr.Code), appErr.Client())
+			c.Abort()
+			return
+		}
+		user, err := findUserByIDUsecase.Execute(ctx, uint(userID))
+		if err != nil {
+			appErr := &apperrors.AppError{ClientError: apperrors.ClientError{Code: apperrors.ErrAuthInvalidToken}}
+			c.JSON(apperrors.HTTPStatus(appErr.Code), appErr.Client())
+			c.Abort()
+			return
+		}
+
+		c.Set("user", user)
 
 		c.Next()
 	}

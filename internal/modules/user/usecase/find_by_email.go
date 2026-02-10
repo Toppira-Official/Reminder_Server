@@ -23,14 +23,14 @@ func NewFindUserByEmailUsecase(repo *repositories.Query) FindUserByEmailUsecase 
 	return &findUserByEmailUsecase{repo: repo}
 }
 
-func (uc *findUserByEmailUsecase) Execute(ctx context.Context, input string) (*entities.User, error) {
-	email := strings.ToLower(input)
+func (uc *findUserByEmailUsecase) Execute(ctx context.Context, email string) (*entities.User, error) {
+	email = strings.ToLower(email)
+
 	user, err := uc.repo.User.WithContext(ctx).Where(uc.repo.User.Email.Eq(email)).First()
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, apperrors.E(apperrors.ErrUserNotFound, err)
 		}
-
 		return nil, apperrors.E(apperrors.ErrServerNotResponding, err)
 	}
 

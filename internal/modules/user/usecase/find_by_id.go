@@ -22,13 +22,12 @@ func NewFindUserByIDUsecase(repo *repositories.Query) FindUserByIDUsecase {
 	return &findUserByIDUsecase{repo: repo}
 }
 
-func (uc *findUserByIDUsecase) Execute(ctx context.Context, input uint) (*entities.User, error) {
-	user, err := uc.repo.User.WithContext(ctx).Where(uc.repo.User.BaseID.Eq(input)).First()
-	if err != nil || user == nil {
+func (uc *findUserByIDUsecase) Execute(ctx context.Context, id uint) (*entities.User, error) {
+	user, err := uc.repo.User.WithContext(ctx).Where(uc.repo.User.BaseID.Eq(id)).First()
+	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, apperrors.E(apperrors.ErrUserNotFound, err)
 		}
-
 		return nil, apperrors.E(apperrors.ErrServerNotResponding, err)
 	}
 

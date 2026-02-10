@@ -15,6 +15,7 @@ type Environments struct {
 	MODE                 Environment
 	JWT_SECRET           Environment
 	JWT_EXPIRES_IN_HOURS Environment
+	FILES_PATH           Environment
 }
 
 func LoadEnvironmentsFromEnvFile() {
@@ -30,6 +31,7 @@ func GetEnvironments() Environments {
 		MODE:                 Environment(os.Getenv("MODE")).orPanic().mustBeIn("develop", "production"),
 		JWT_SECRET:           Environment(os.Getenv("JWT_SECRET")).orPanic(),
 		JWT_EXPIRES_IN_HOURS: Environment(os.Getenv("JWT_EXPIRES_IN_HOURS")).orPanic(),
+		FILES_PATH:           Environment(os.Getenv("FILES_PATH")).orDefault("static"),
 	}
 }
 

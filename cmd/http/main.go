@@ -7,6 +7,7 @@ import (
 	"github.com/Toppira-Official/backend/internal/modules/user"
 	"github.com/Toppira-Official/backend/internal/scripts"
 	"github.com/Toppira-Official/backend/internal/shared/middlewares"
+	"github.com/Toppira-Official/backend/internal/shared/utils"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -46,6 +47,7 @@ func main() {
 			user.Module,
 			auth.Module,
 			middlewares.Module,
+			utils.Module,
 		).
 		Run()
 }

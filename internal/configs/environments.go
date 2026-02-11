@@ -18,6 +18,7 @@ type Environments struct {
 	FILES_PATH           Environment
 	GOOGLE_CLIENT_ID     Environment
 	GOOGLE_CLIENT_SECRET Environment
+	GOOGLE_REDIRECT_URL  Environment
 }
 
 func LoadEnvironmentsFromEnvFile() {
@@ -36,6 +37,7 @@ func GetEnvironments() Environments {
 		FILES_PATH:           Environment(os.Getenv("FILES_PATH")).orDefault("static"),
 		GOOGLE_CLIENT_ID:     Environment(os.Getenv("GOOGLE_CLIENT_ID")).orPanic(),
 		GOOGLE_CLIENT_SECRET: Environment(os.Getenv("GOOGLE_CLIENT_SECRET")).orPanic(),
+		GOOGLE_REDIRECT_URL:  Environment(os.Getenv("GOOGLE_REDIRECT_URL")).orPanic(),
 	}
 }
 

@@ -14,6 +14,7 @@ require (
 	go.uber.org/fx v1.24.0
 	go.uber.org/zap v1.27.1
 	golang.org/x/crypto v0.47.0
+	golang.org/x/oauth2 v0.35.0
 	gorm.io/datatypes v1.2.7
 	gorm.io/gen v0.3.27
 	gorm.io/gorm v1.31.1
@@ -21,6 +22,7 @@ require (
 )
 
 require (
+	cloud.google.com/go/compute/metadata v0.3.0 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/PuerkitoBio/purell v1.1.1 // indirect

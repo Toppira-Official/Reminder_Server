@@ -4,12 +4,14 @@ import (
 	"context"
 	"errors"
 	"strings"
+	"time"
 
 	authUsecase "github.com/Toppira-Official/backend/internal/modules/auth/usecase"
 	"github.com/Toppira-Official/backend/internal/modules/user/usecase/input"
 	"github.com/Toppira-Official/backend/internal/shared/entities"
 	apperrors "github.com/Toppira-Official/backend/internal/shared/errors"
 	"github.com/Toppira-Official/backend/internal/shared/repositories"
+	"github.com/sony/gobreaker/v2"
 	"gorm.io/gorm"
 )
 
@@ -20,10 +22,30 @@ type CreateUserUsecase interface {
 type createUserUsecase struct {
 	repo         *repositories.Query
 	hashPassword authUsecase.HashPasswordUsecase
+	breaker      *gobreaker.CircuitBreaker[struct{}]
 }
 
 func NewCreateUserUsecase(repo *repositories.Query, hashPassword authUsecase.HashPasswordUsecase) CreateUserUsecase {
-	return &createUserUsecase{repo: repo, hashPassword: hashPassword}
+	settings := gobreaker.Settings{
+		Name:        "create_user_db",
+		MaxRequests: 1,
+		Interval:    0,
+		Timeout:     time.Minute * 2,
+		ReadyToTrip: func(counts gobreaker.Counts) bool {
+			return counts.ConsecutiveFailures >= 3
+		},
+		IsSuccessful: func(err error) bool {
+			if err == nil {
+				return true
+			}
+			if errors.Is(err, gorm.ErrDuplicatedKey) {
+				return true
+			}
+			return false
+		},
+	}
+
+	return &createUserUsecase{repo: repo, hashPassword: hashPassword, breaker: gobreaker.NewCircuitBreaker[struct{}](settings)}
 }
 
 func (uc *createUserUsecase) Execute(ctx context.Context, input *input.CreateUserInput) (*entities.User, error) {
@@ -50,8 +72,14 @@ func (uc *createUserUsecase) Execute(ctx context.Context, input *input.CreateUse
 		IsActive:       false,
 	}
 
-	err = uc.repo.User.WithContext(ctx).Create(user)
+	_, err = uc.breaker.Execute(func() (struct{}, error) {
+		return struct{}{}, uc.repo.User.WithContext(ctx).Create(user)
+	})
+
 	if err != nil {
+		if errors.Is(err, gobreaker.ErrOpenState) {
+			return nil, apperrors.E(apperrors.ErrServiceTemporarilyUnavailable, err)
+		}
 		if errors.Is(err, gorm.ErrDuplicatedKey) {
 			return nil, apperrors.E(apperrors.ErrUserAlreadyExists, err)
 		}

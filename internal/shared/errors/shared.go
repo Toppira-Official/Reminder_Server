@@ -1,6 +1,7 @@
 package errors
 
 const (
-	ErrServerInternalError ErrCode = "SERVER_INTERNAL_ERROR"
-	ErrServerNotResponding ErrCode = "SERVER_NOT_RESPONDING"
+	ErrServerInternalError           ErrCode = "SERVER_INTERNAL_ERROR"
+	ErrServerNotResponding           ErrCode = "SERVER_NOT_RESPONDING"
+	ErrServiceTemporarilyUnavailable ErrCode = "SERVICE_TEMPORARILY_UNAVAILABLE"
 )

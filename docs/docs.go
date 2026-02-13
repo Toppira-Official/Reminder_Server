@@ -283,26 +283,28 @@ const docTemplate = `{
         "ErrCode": {
             "type": "string",
             "enum": [
-                "SERVER_INTERNAL_ERROR",
-                "SERVER_NOT_RESPONDING",
                 "AUTH_INVALID_TOKEN",
                 "AUTH_EXPIRED_TOKEN",
                 "AUTH_TOKEN_NOT_PROVIDED",
                 "AUTH_INVALID_EMAIL_OR_PASSWORD",
                 "USER_INVALID_DATA",
                 "USER_ALREADY_EXISTS",
-                "USER_NOT_FOUND"
+                "USER_NOT_FOUND",
+                "SERVER_INTERNAL_ERROR",
+                "SERVER_NOT_RESPONDING",
+                "SERVICE_TEMPORARILY_UNAVAILABLE"
             ],
             "x-enum-varnames": [
-                "ErrServerInternalError",
-                "ErrServerNotResponding",
                 "ErrAuthInvalidToken",
                 "ErrAuthExpiredToken",
                 "ErrAuthTokenNotProvided",
                 "ErrAuthInvalidEmailOrPassword",
                 "ErrUserInvalidData",
                 "ErrUserAlreadyExists",
-                "ErrUserNotFound"
+                "ErrUserNotFound",
+                "ErrServerInternalError",
+                "ErrServerNotResponding",
+                "ErrServiceTemporarilyUnavailable"
             ]
         },
         "HttpOutput": {

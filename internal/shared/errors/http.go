@@ -4,8 +4,9 @@ import "net/http"
 
 var httpStatusByCode = map[ErrCode]int{
 	// Server Errors
-	ErrServerInternalError: http.StatusInternalServerError,
-	ErrServerNotResponding: http.StatusServiceUnavailable,
+	ErrServerInternalError:           http.StatusInternalServerError,
+	ErrServerNotResponding:           http.StatusServiceUnavailable,
+	ErrServiceTemporarilyUnavailable: http.StatusServiceUnavailable,
 
 	// User Errors
 	ErrUserInvalidData:   http.StatusBadRequest,

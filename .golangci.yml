@@ -22,7 +22,3 @@ issues:
   max-same-issues: 10
   max-issues-per-linter: 0
   exclude-use-default: false
-  exclude-dirs:
-    - "internal/shared/repositories"
-  exclude-files:
-    - "internal/modules/auth/usecase/jwt_*"

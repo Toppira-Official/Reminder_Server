@@ -1,12 +1,14 @@
-# Toppira — Backend
+# Toppira — Reminder Server
 
-> Backend service for **Toppira**, a reminder and todo management platform built with **Go**. Designed for production-grade reliability and future **AI** integration.
+> Backend for **Toppira Reminder**: the server powering the reminder and todo experience within the Toppira ecosystem. Built with **Go** for production-grade reliability and future **AI** integration.
+
+**Repository:** [Toppira-Official/Reminder_Server](https://github.com/Toppira-Official/Reminder_Server)
 
 ---
 
 ## 📋 Overview
 
-Toppira is a reminder and task management API with a modular, dependency-injected architecture. It currently provides authentication (email/password and Google OAuth), user profile management, and a full domain model for reminders. The codebase is structured for scalability and ready for advanced features such as AI-powered scheduling and smart notifications.
+**Toppira** is a platform with multiple products. This repository is the **Reminder Server**—the backend for Toppira’s reminder and todo app. It exposes a modular, dependency-injected API that provides authentication (email/password and Google OAuth), user profile management, and a full domain model for reminders. The codebase is structured for scalability and ready for advanced features such as AI-powered scheduling and smart notifications.
 
 ---
 

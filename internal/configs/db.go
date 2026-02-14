@@ -36,6 +36,7 @@ func NewDB(lc fx.Lifecycle, envs Environments, log *zap.Logger) *gorm.DB {
 			Logger:                                   gormLogger,
 			PrepareStmt:                              true,
 			DisableForeignKeyConstraintWhenMigrating: true,
+			TranslateError:                           true,
 		})
 	if err != nil {
 		log.Fatal("failed to connect to db", zap.Error(err))

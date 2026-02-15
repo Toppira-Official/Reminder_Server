@@ -37,6 +37,7 @@ func NewUpdateMeHandler(updateUserUsecase usecase.UpdateUserUsecase, q *queues.C
 //	@Produce	json
 //	@Param		body	body		dto.UpdateMeInput	true	"Update Me Input"
 //	@Success	200		{object}	output.HttpOutput
+//	@Success	202		{object}	output.HttpOutput
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	401		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
@@ -90,7 +91,9 @@ func (hl *UpdateMeHandler) UpdateMyInfo(c *gin.Context) {
 			asynq.MaxRetry(10),
 			asynq.ProcessIn(usecase.UpdateUserRetryTime),
 		)
-		c.Status(http.StatusAccepted)
+		c.JSON(http.StatusAccepted, output.HttpOutput{
+			Data: nil,
+		})
 		return
 	}
 }

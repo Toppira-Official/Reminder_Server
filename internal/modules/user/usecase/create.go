@@ -4,8 +4,8 @@ import (
 	"context"
 	"errors"
 	"strings"
+	"time"
 
-	"github.com/Toppira-Official/Reminder_Server/internal/configs"
 	authUsecase "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/usecase"
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase/input"
 	"github.com/Toppira-Official/Reminder_Server/internal/shared/entities"
@@ -14,6 +14,8 @@ import (
 	"github.com/sony/gobreaker/v2"
 	"gorm.io/gorm"
 )
+
+const createUserRetryTime = 30 * time.Second
 
 type CreateUserUsecase interface {
 	Execute(ctx context.Context, input *input.CreateUserInput) (*entities.User, error)
@@ -30,7 +32,7 @@ func NewCreateUserUsecase(repo *repositories.Query, hashPassword authUsecase.Has
 		Name:        "create_user_db",
 		MaxRequests: 1,
 		Interval:    0,
-		Timeout:     configs.RetryDelay,
+		Timeout:     createUserRetryTime,
 		ReadyToTrip: func(counts gobreaker.Counts) bool {
 			return counts.ConsecutiveFailures >= 3
 		},

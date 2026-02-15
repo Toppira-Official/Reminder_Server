@@ -3,9 +3,11 @@ package jobs
 import (
 	"context"
 	"encoding/json"
+	"errors"
 
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase"
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase/input"
+	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"github.com/Toppira-Official/Reminder_Server/internal/shared/queues"
 
 	"github.com/hibiken/asynq"
@@ -34,6 +36,14 @@ func (j *updateUserJob) Process(ctx context.Context, t *asynq.Task) error {
 	_, err := j.uc.Execute(ctx, &p)
 	if err == nil {
 		return nil
+	}
+
+	var appErr *apperrors.AppError
+	if errors.As(err, &appErr) {
+		switch appErr.Code {
+		case apperrors.ErrUserNotFound, apperrors.ErrUserInvalidData, apperrors.ErrUserAlreadyExists:
+			return asynq.SkipRetry
+		}
 	}
 
 	return err

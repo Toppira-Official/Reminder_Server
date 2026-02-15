@@ -15,17 +15,20 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hibiken/asynq"
 	"github.com/sony/gobreaker/v2"
+	"go.uber.org/zap"
 )
 
 type UpdateMeHandler struct {
 	updateUserUsecase usecase.UpdateUserUsecase
 	q                 *queues.Client
+	logger            *zap.Logger
 }
 
-func NewUpdateMeHandler(updateUserUsecase usecase.UpdateUserUsecase, q *queues.Client) *UpdateMeHandler {
+func NewUpdateMeHandler(updateUserUsecase usecase.UpdateUserUsecase, q *queues.Client, logger *zap.Logger) *UpdateMeHandler {
 	return &UpdateMeHandler{
 		updateUserUsecase: updateUserUsecase,
 		q:                 q,
+		logger:            logger,
 	}
 }
 
@@ -84,13 +87,17 @@ func (hl *UpdateMeHandler) UpdateMyInfo(c *gin.Context) {
 	}
 
 	if errors.Is(err, gobreaker.ErrOpenState) {
-		_ = jobs.EnqueueUpdateUser(
+		if enqErr := jobs.EnqueueUpdateUser(
 			hl.q,
 			usecaseInput,
 			asynq.Queue("critical"),
 			asynq.MaxRetry(10),
 			asynq.ProcessIn(usecase.UpdateUserRetryTime),
-		)
+		); enqErr != nil {
+			hl.logger.Error("failed to enqueue update user task", zap.Error(enqErr))
+			c.Error(apperrors.E(apperrors.ErrServiceTemporarilyUnavailable, enqErr))
+			return
+		}
 		c.JSON(http.StatusAccepted, output.HttpOutput{
 			Data: nil,
 		})

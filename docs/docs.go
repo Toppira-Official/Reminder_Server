@@ -293,24 +293,24 @@ const docTemplate = `{
                 "AUTH_EXPIRED_TOKEN",
                 "AUTH_TOKEN_NOT_PROVIDED",
                 "AUTH_INVALID_EMAIL_OR_PASSWORD",
-                "USER_INVALID_DATA",
-                "USER_ALREADY_EXISTS",
-                "USER_NOT_FOUND",
                 "SERVER_INTERNAL_ERROR",
                 "SERVER_NOT_RESPONDING",
-                "SERVICE_TEMPORARILY_UNAVAILABLE"
+                "SERVICE_TEMPORARILY_UNAVAILABLE",
+                "USER_INVALID_DATA",
+                "USER_ALREADY_EXISTS",
+                "USER_NOT_FOUND"
             ],
             "x-enum-varnames": [
                 "ErrAuthInvalidToken",
                 "ErrAuthExpiredToken",
                 "ErrAuthTokenNotProvided",
                 "ErrAuthInvalidEmailOrPassword",
-                "ErrUserInvalidData",
-                "ErrUserAlreadyExists",
-                "ErrUserNotFound",
                 "ErrServerInternalError",
                 "ErrServerNotResponding",
-                "ErrServiceTemporarilyUnavailable"
+                "ErrServiceTemporarilyUnavailable",
+                "ErrUserInvalidData",
+                "ErrUserAlreadyExists",
+                "ErrUserNotFound"
             ]
         },
         "HttpOutput": {

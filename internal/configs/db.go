@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/avast/retry-go"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 	"gorm.io/driver/postgres"
@@ -31,13 +32,28 @@ func NewDB(lc fx.Lifecycle, envs Environments, log *zap.Logger) *gorm.DB {
 		},
 	)
 
-	db, err := gorm.Open(postgres.Open(dsn),
-		&gorm.Config{
-			Logger:                                   gormLogger,
-			PrepareStmt:                              true,
-			DisableForeignKeyConstraintWhenMigrating: true,
-			TranslateError:                           true,
-		})
+	var db *gorm.DB
+	err := retry.Do(
+		func() error {
+			var err error
+			db, err = gorm.Open(postgres.Open(dsn),
+				&gorm.Config{
+					Logger:                                   gormLogger,
+					PrepareStmt:                              true,
+					DisableForeignKeyConstraintWhenMigrating: true,
+					TranslateError:                           true,
+				})
+			return err
+		},
+		retry.Attempts(5),
+		retry.DelayType(retry.CombineDelay(retry.BackOffDelay, retry.RandomDelay)),
+		retry.Delay(1*time.Second),
+		retry.MaxJitter(500*time.Millisecond),
+		retry.LastErrorOnly(true),
+		retry.OnRetry(func(n uint, err error) {
+			log.Warn("db connection retry", zap.Uint("attempt", n), zap.Error(err))
+		}),
+	)
 	if err != nil {
 		log.Fatal("failed to connect to db", zap.Error(err))
 	}

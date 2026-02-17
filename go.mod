@@ -3,6 +3,7 @@ module github.com/Toppira-Official/Reminder_Server
 go 1.25.6
 
 require (
+	github.com/avast/retry-go v3.0.0+incompatible
 	github.com/gin-contrib/zap v1.1.6
 	github.com/gin-gonic/gin v1.11.0
 	github.com/golang-jwt/jwt/v5 v5.3.1

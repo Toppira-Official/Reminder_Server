@@ -11,6 +11,7 @@ var Module = fx.Module(
 		NewHttpServer,
 		NewLogger,
 		NewDB,
+		NewCache,
 		NewQuery,
 		GetGoogleOauthConfig,
 	),

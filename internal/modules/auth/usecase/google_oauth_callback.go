@@ -3,9 +3,11 @@ package usecase
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
+	"github.com/redis/go-redis/v9"
 
 	"golang.org/x/oauth2"
 )
@@ -18,25 +20,36 @@ type GoogleUserInfo struct {
 }
 
 type GoogleOauthCallbackUsecase interface {
-	Execute(ctx context.Context, code, state, expectedState string) (*GoogleUserInfo, error)
+	Execute(ctx context.Context, code, state string) (*GoogleUserInfo, error)
 }
 
 type googleOauthCallbackUsecase struct {
 	googleOauthConfig *oauth2.Config
+	cache             *redis.Client
 }
 
-func NewGoogleOauthCallbackUsecase(googleOauthConfig *oauth2.Config) GoogleOauthCallbackUsecase {
-	return &googleOauthCallbackUsecase{googleOauthConfig: googleOauthConfig}
+func NewGoogleOauthCallbackUsecase(googleOauthConfig *oauth2.Config, cache *redis.Client) GoogleOauthCallbackUsecase {
+	return &googleOauthCallbackUsecase{googleOauthConfig: googleOauthConfig, cache: cache}
 }
 
 func (uc *googleOauthCallbackUsecase) Execute(
 	ctx context.Context,
-	code, state, expectedState string,
+	code, state string,
 ) (*GoogleUserInfo, error) {
-	if code == "" {
+	if code == "" || state == "" {
 		return nil, apperrors.E(apperrors.ErrAuthInvalidToken)
 	}
-	if expectedState == "" || state != expectedState {
+
+	key := fmt.Sprintf("oauth:state:%s", state)
+	expectedState, err := uc.cache.GetDel(ctx, key).Result()
+	if err == redis.Nil {
+		return nil, apperrors.E(apperrors.ErrAuthExpiredToken)
+	}
+	if err != nil {
+		return nil, apperrors.E(apperrors.ErrServerNotResponding, err)
+	}
+
+	if expectedState != "1" {
 		return nil, apperrors.E(apperrors.ErrAuthInvalidToken)
 	}
 

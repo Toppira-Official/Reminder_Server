@@ -4,27 +4,33 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/base64"
+	"fmt"
+	"time"
 
+	"github.com/redis/go-redis/v9"
 	"golang.org/x/oauth2"
 )
 
 type GoogleOauthRedirectURLUsecase interface {
-	Execute(ctx context.Context) (redirectUrl, state string)
+	Execute(ctx context.Context) (redirectUrl string)
 }
 
 type googleOauthRedirectURLUsecase struct {
 	googleOauthConfig *oauth2.Config
+	cache             *redis.Client
 }
 
-func NewGoogleOauthRedirectURLUsecase(googleOauthConfig *oauth2.Config) GoogleOauthRedirectURLUsecase {
-	return &googleOauthRedirectURLUsecase{googleOauthConfig: googleOauthConfig}
+func NewGoogleOauthRedirectURLUsecase(googleOauthConfig *oauth2.Config, cache *redis.Client) GoogleOauthRedirectURLUsecase {
+	return &googleOauthRedirectURLUsecase{googleOauthConfig: googleOauthConfig, cache: cache}
 }
 
-func (uc *googleOauthRedirectURLUsecase) Execute(ctx context.Context) (redirectUrl, state string) {
-	state = generateState()
+func (uc *googleOauthRedirectURLUsecase) Execute(ctx context.Context) (redirectUrl string) {
+	state := generateState()
 	redirectUrl = uc.googleOauthConfig.AuthCodeURL(state)
 
-	return
+	uc.cache.Set(ctx, fmt.Sprintf("oauth:state:%s", state), "1", 5*time.Minute)
+
+	return redirectUrl
 }
 
 func generateState() string {

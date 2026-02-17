@@ -5,7 +5,6 @@ import (
 
 	"github.com/Toppira-Official/Reminder_Server/internal/configs"
 	authUsecase "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/usecase"
-	output "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,29 +29,13 @@ func NewGoogleOauthHandler(
 
 // GetGoogleOauthRedirectURL godoc
 //
-//	@Summary	get google oauth redirect url
+//	@Summary	Redirect to Google OAuth URL
 //	@Tags		Authentication
-//	@Accept		json
-//	@Produce	json
-//	@Success	200	{object}	output.HttpOutput
+//	@Success	307	{string}	string	Redirect	to	Google	OAuth	URL
 //	@Router		/auth/google-oauth/redirect-url [get]
 func (h *GoogleOauthHandler) GetGoogleOauthRedirectURL(c *gin.Context) {
 	ctx := c.Request.Context()
-	redirectUrl, state := h.googleOauthRedirectURLUsecase.Execute(ctx)
+	redirectUrl := h.googleOauthRedirectURLUsecase.Execute(ctx)
 
-	http.SetCookie(c.Writer, &http.Cookie{
-		Name:     googleOauthStateCookieName,
-		Value:    state,
-		Path:     "/",
-		MaxAge:   600,
-		HttpOnly: true,
-		Secure:   h.envs.MODE.String() == "production",
-		SameSite: http.SameSiteLaxMode,
-	})
-
-	c.JSON(http.StatusOK, output.HttpOutput{
-		Data: map[string]any{
-			"redirect_url": redirectUrl,
-		}},
-	)
+	c.Redirect(http.StatusTemporaryRedirect, redirectUrl)
 }

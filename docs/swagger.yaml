@@ -8,9 +8,6 @@ definitions:
     type: object
   ErrCode:
     enum:
-    - SERVER_INTERNAL_ERROR
-    - SERVER_NOT_RESPONDING
-    - SERVICE_TEMPORARILY_UNAVAILABLE
     - USER_INVALID_DATA
     - USER_ALREADY_EXISTS
     - USER_NOT_FOUND
@@ -18,11 +15,11 @@ definitions:
     - AUTH_EXPIRED_TOKEN
     - AUTH_TOKEN_NOT_PROVIDED
     - AUTH_INVALID_EMAIL_OR_PASSWORD
+    - SERVER_INTERNAL_ERROR
+    - SERVER_NOT_RESPONDING
+    - SERVICE_TEMPORARILY_UNAVAILABLE
     type: string
     x-enum-varnames:
-    - ErrServerInternalError
-    - ErrServerNotResponding
-    - ErrServiceTemporarilyUnavailable
     - ErrUserInvalidData
     - ErrUserAlreadyExists
     - ErrUserNotFound
@@ -30,6 +27,9 @@ definitions:
     - ErrAuthExpiredToken
     - ErrAuthTokenNotProvided
     - ErrAuthInvalidEmailOrPassword
+    - ErrServerInternalError
+    - ErrServerNotResponding
+    - ErrServiceTemporarilyUnavailable
   HttpOutput:
     properties:
       data:

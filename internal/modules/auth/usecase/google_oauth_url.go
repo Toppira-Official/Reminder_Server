@@ -5,9 +5,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 
-	"github.com/Toppira-Official/Reminder_Server/internal/configs"
 	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 )
 
 type GoogleOauthRedirectURLUsecase interface {
@@ -15,28 +13,16 @@ type GoogleOauthRedirectURLUsecase interface {
 }
 
 type googleOauthRedirectURLUsecase struct {
-	envs configs.Environments
+	googleOauthConfig *oauth2.Config
 }
 
-func NewGoogleOauthRedirectURLUsecase(envs configs.Environments) GoogleOauthRedirectURLUsecase {
-	return &googleOauthRedirectURLUsecase{envs: envs}
+func NewGoogleOauthRedirectURLUsecase(googleOauthConfig *oauth2.Config) GoogleOauthRedirectURLUsecase {
+	return &googleOauthRedirectURLUsecase{googleOauthConfig: googleOauthConfig}
 }
 
 func (uc *googleOauthRedirectURLUsecase) Execute(ctx context.Context) (redirectUrl, state string) {
-	googleOauthConfig := &oauth2.Config{
-		RedirectURL:  uc.envs.GOOGLE_REDIRECT_URL.String(),
-		ClientID:     uc.envs.GOOGLE_CLIENT_ID.String(),
-		ClientSecret: uc.envs.GOOGLE_CLIENT_SECRET.String(),
-		Scopes: []string{
-			"email",
-			"openid",
-			"profile",
-		},
-		Endpoint: google.Endpoint,
-	}
-
 	state = generateState()
-	redirectUrl = googleOauthConfig.AuthCodeURL(state)
+	redirectUrl = uc.googleOauthConfig.AuthCodeURL(state)
 
 	return
 }

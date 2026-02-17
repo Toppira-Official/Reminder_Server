@@ -12,6 +12,7 @@ var Module = fx.Module(
 		NewLogger,
 		NewDB,
 		NewQuery,
+		GetGoogleOauthConfig,
 	),
 	fx.Invoke(LoadMigrations),
 )

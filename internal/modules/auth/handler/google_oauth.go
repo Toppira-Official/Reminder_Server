@@ -34,10 +34,15 @@ func NewGoogleOauthHandler(
 //	@Summary	Redirect to Google OAuth URL
 //	@Tags		Authentication
 //	@Success	307	{string}	string	Redirect	to	Google	OAuth	URL
+//	@Failure	500	{object}	errors.ClientError
 //	@Router		/auth/google-oauth/redirect-url [get]
 func (h *GoogleOauthHandler) GetGoogleOauthRedirectURL(c *gin.Context) {
 	ctx := c.Request.Context()
-	redirectUrl := h.googleOauthRedirectURLUsecase.Execute(ctx)
+	redirectUrl, err := h.googleOauthRedirectURLUsecase.Execute(ctx)
+	if err != nil {
+		c.Error(err)
+		return
+	}
 
 	c.Redirect(http.StatusTemporaryRedirect, redirectUrl)
 }

@@ -7,12 +7,13 @@ import (
 	"fmt"
 	"time"
 
+	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"github.com/redis/go-redis/v9"
 	"golang.org/x/oauth2"
 )
 
 type GoogleOauthRedirectURLUsecase interface {
-	Execute(ctx context.Context) (redirectUrl string)
+	Execute(ctx context.Context) (redirectUrl string, err error)
 }
 
 type googleOauthRedirectURLUsecase struct {
@@ -24,13 +25,16 @@ func NewGoogleOauthRedirectURLUsecase(googleOauthConfig *oauth2.Config, cache *r
 	return &googleOauthRedirectURLUsecase{googleOauthConfig: googleOauthConfig, cache: cache}
 }
 
-func (uc *googleOauthRedirectURLUsecase) Execute(ctx context.Context) (redirectUrl string) {
+func (uc *googleOauthRedirectURLUsecase) Execute(ctx context.Context) (string, error) {
 	state := generateState()
-	redirectUrl = uc.googleOauthConfig.AuthCodeURL(state)
+	redirectUrl := uc.googleOauthConfig.AuthCodeURL(state)
 
-	uc.cache.Set(ctx, fmt.Sprintf("oauth:state:%s", state), "1", 5*time.Minute)
+	err := uc.cache.Set(ctx, fmt.Sprintf("oauth:state:%s", state), "1", 5*time.Minute).Err()
+	if err != nil {
+		return "", apperrors.E(apperrors.ErrServerNotResponding, err)
+	}
 
-	return redirectUrl
+	return redirectUrl, nil
 }
 
 func generateState() string {

@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1539f4b3-e433-497b-9c19-4d69a9bc7888" name="Changes" comment="fix: fix documents">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="1539f4b3-e433-497b-9c19-4d69a9bc7888" name="Changes" comment="refactor: fix qodana warnings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/configs/http_server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/configs/http_server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/modules/auth/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modules/auth/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/modules/auth/usecase/password_verify.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modules/auth/usecase/password_verify.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/modules/user/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modules/user/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/modules/auth/handler/google_oauth.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modules/auth/handler/google_oauth.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,6 +102,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fix: fix documents" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: fix documents" />
+    <MESSAGE value="refactor: fix qodana warnings" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: fix qodana warnings" />
   </component>
 </project>

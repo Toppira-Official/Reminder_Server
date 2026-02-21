@@ -15,7 +15,7 @@ type Reminder struct {
 
 	Status constants.ReminderStatus `gorm:"type:varchar(20);not null" json:"status"`
 
-	ReminderTimes datatypes.JSON `gorm:"type:json" json:"reminder_times,omitempty"`
+	ReminderTimes datatypes.JSONSlice[time.Time] `gorm:"type:json" json:"reminder_times,omitempty"`
 
 	ScheduledAt time.Time `gorm:"not null;index" json:"scheduled_at"`
 

@@ -11,5 +11,5 @@ type NewReminderInput struct {
 	Description   *string                     `json:"description,omitempty"`
 	ReminderTimes []time.Time                 `json:"reminder_times,omitempty"`
 	ScheduledAt   time.Time                   `json:"scheduled_at" binding:"required"`
-	Priority      *constants.ReminderPriority `json:"priority,omitempty"`
+	Priority      *constants.ReminderPriority `json:"priority,omitempty" binding:"omitempty,priority"`
 } //	@name	NewReminderInput

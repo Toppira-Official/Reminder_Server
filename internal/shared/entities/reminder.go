@@ -21,8 +21,8 @@ type Reminder struct {
 
 	Priority *constants.ReminderPriority `gorm:"type:varchar(20)" json:"priority"`
 
-	UserID uint `gorm:"not null;index" json:"user_id"`
-	User   User `gorm:"constraint:OnDelete:CASCADE"`
+	UserID uint  `gorm:"not null;index" json:"user_id"`
+	User   *User `gorm:"constraint:OnDelete:CASCADE" json:"user,omitempty"`
 }
 
 func (Reminder) TableName() string {

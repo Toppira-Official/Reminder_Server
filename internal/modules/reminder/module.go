@@ -2,6 +2,7 @@ package reminder
 
 import (
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler"
+	"github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler/validator"
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/usecase"
 	"go.uber.org/fx"
 )
@@ -14,5 +15,6 @@ var Module = fx.Module(
 	),
 	fx.Invoke(
 		RegisterRoutes,
+		validator.RegisterPriorityValidators,
 	),
 )

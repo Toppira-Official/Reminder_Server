@@ -192,6 +192,62 @@
             }
         },
         "/reminder": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reminder"
+                ],
+                "summary": "returns user's all reminders",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Items per page",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/HttpOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ClientError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ClientError"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/ClientError"
+                        }
+                    }
+                }
+            },
             "post": {
                 "security": [
                     {
@@ -382,30 +438,30 @@
         "ErrCode": {
             "type": "string",
             "enum": [
+                "AUTH_INVALID_TOKEN",
+                "AUTH_EXPIRED_TOKEN",
+                "AUTH_TOKEN_NOT_PROVIDED",
+                "AUTH_INVALID_EMAIL_OR_PASSWORD",
+                "Reminder_INVALID_DATA",
                 "SERVER_INTERNAL_ERROR",
                 "SERVER_NOT_RESPONDING",
                 "SERVICE_TEMPORARILY_UNAVAILABLE",
                 "USER_INVALID_DATA",
                 "USER_ALREADY_EXISTS",
-                "USER_NOT_FOUND",
-                "AUTH_INVALID_TOKEN",
-                "AUTH_EXPIRED_TOKEN",
-                "AUTH_TOKEN_NOT_PROVIDED",
-                "AUTH_INVALID_EMAIL_OR_PASSWORD",
-                "Reminder_INVALID_DATA"
+                "USER_NOT_FOUND"
             ],
             "x-enum-varnames": [
+                "ErrAuthInvalidToken",
+                "ErrAuthExpiredToken",
+                "ErrAuthTokenNotProvided",
+                "ErrAuthInvalidEmailOrPassword",
+                "ErrReminderInvalidData",
                 "ErrServerInternalError",
                 "ErrServerNotResponding",
                 "ErrServiceTemporarilyUnavailable",
                 "ErrUserInvalidData",
                 "ErrUserAlreadyExists",
-                "ErrUserNotFound",
-                "ErrAuthInvalidToken",
-                "ErrAuthExpiredToken",
-                "ErrAuthTokenNotProvided",
-                "ErrAuthInvalidEmailOrPassword",
-                "ErrReminderInvalidData"
+                "ErrUserNotFound"
             ]
         },
         "HttpOutput": {

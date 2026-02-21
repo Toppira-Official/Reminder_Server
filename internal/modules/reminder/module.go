@@ -11,7 +11,9 @@ var Module = fx.Module(
 	"reminder",
 	fx.Provide(
 		usecase.NewCreateReminderUsecase,
+		usecase.NewListRemindersUsecase,
 		handler.NewNewReminderHandler,
+		handler.NewMyRemindersHandler,
 	),
 	fx.Invoke(
 		RegisterRoutes,

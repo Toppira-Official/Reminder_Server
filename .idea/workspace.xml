@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1539f4b3-e433-497b-9c19-4d69a9bc7888" name="Changes" comment="chore: update dependencies and modify project configuration">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/8aaf253d-c80a-4d5e-bf36-cb5a84f0a90f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/8aaf253d-c80a-4d5e-bf36-cb5a84f0a90f.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/8aaf253d-c80a-4d5e-bf36-cb5a84f0a90f/storage_v2/_src_/database/db.fgwAAA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/8aaf253d-c80a-4d5e-bf36-cb5a84f0a90f/storage_v2/_src_/database/db.fgwAAA/schema/public.abK9xQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="1539f4b3-e433-497b-9c19-4d69a9bc7888" name="Changes" comment="feat: implement delete reminder use case">
       <change beforePath="$PROJECT_DIR$/docs/docs.go" beforeDir="false" afterPath="$PROJECT_DIR$/docs/docs.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/swagger.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/modules/reminder/module.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modules/reminder/module.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/modules/reminder/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modules/reminder/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/modules/reminder/usecase/delete.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modules/reminder/usecase/delete.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,11 +80,6 @@
     ]
   }
 }]]></component>
-  <component name="QodanaReportsService">
-    <option name="descriptions">
-      <ReportDescription localRun="true" path="C:\Users\Alimo\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="90835363-da92-45f6-b2d7-62f503eba1e9" reportId="backend/qodana/2026-02-20" />
-    </option>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -113,7 +106,8 @@
     <MESSAGE value="refactor: fix qodana warnings" />
     <MESSAGE value="feat: complete google callback logic" />
     <MESSAGE value="chore: update dependencies and modify project configuration" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: update dependencies and modify project configuration" />
+    <MESSAGE value="feat: implement delete reminder use case" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: implement delete reminder use case" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

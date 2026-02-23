@@ -15,6 +15,7 @@ var Module = fx.Module(
 		usecase.NewDeleteeReminderUsecase,
 		handler.NewNewReminderHandler,
 		handler.NewMyRemindersHandler,
+		handler.NewDeleteRemindersHandler,
 	),
 	fx.Invoke(
 		RegisterRoutes,

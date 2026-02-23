@@ -31,6 +31,20 @@
             </set>
           </value>
         </entry>
+        <entry key="DeleteReminderInput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/modules/reminder/handler/dto/delete_reminder.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="DeleteRemindersHandler">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/modules/reminder/handler/delete_reminder.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="Environments">
           <value>
             <set>
@@ -56,6 +70,7 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/internal/modules/auth/router.go" />
+              <option value="file://$PROJECT_DIR$/internal/modules/reminder/router.go" />
               <option value="file://$PROJECT_DIR$/internal/modules/user/router.go" />
             </set>
           </value>
@@ -491,17 +506,53 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/internal/modules/reminder/handler/delete_reminder.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1771874596842" />
+              <option name="schema">
+                <list>
+                  <option value="DeleteRemindersHandler" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/modules/reminder/handler/dto/delete_reminder.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1771873771638" />
+              <option name="schema">
+                <list>
+                  <option value="DeleteReminderInput" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/internal/modules/reminder/module.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771873283406" />
+              <option name="lastModified" value="1771873447364" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/modules/reminder/router.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1771873883502" />
+              <option name="schema">
+                <list>
+                  <option value="Handler" />
+                </list>
+              </option>
             </ScannedPath>
           </value>
         </entry>
         <entry key="file://$PROJECT_DIR$/internal/modules/reminder/usecase/delete.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771873250916" />
+              <option name="lastModified" value="1771874575375" />
               <option name="schema">
                 <list>
                   <option value="deleteReminderUsecase" />
@@ -826,7 +877,9 @@
         <entry key="client_error" value="ClientError" />
         <entry key="create_user_input" value="CreateUserInput" />
         <entry key="create_user_usecase" value="createUserUsecase" />
+        <entry key="delete_reminder_input" value="DeleteReminderInput" />
         <entry key="delete_reminder_usecase" value="deleteReminderUsecase" />
+        <entry key="delete_reminders_handler" value="DeleteRemindersHandler" />
         <entry key="environments" value="Environments" />
         <entry key="file_saver" value="FileSaver" />
         <entry key="find_user_by_email_usecase" value="findUserByEmailUsecase" />

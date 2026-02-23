@@ -11,7 +11,7 @@ import (
 )
 
 type DeleteReminderUsecase interface {
-	Execute(ctx context.Context, id uint) error
+	Execute(ctx context.Context, reminderID, userID uint) error
 }
 
 type deleteReminderUsecase struct {
@@ -41,11 +41,14 @@ func NewDeleteeReminderUsecase(repo *repositories.Query) DeleteReminderUsecase {
 	return &deleteReminderUsecase{repo: repo, breaker: gobreaker.NewCircuitBreaker[struct{}](settings)}
 }
 
-func (uc *deleteReminderUsecase) Execute(ctx context.Context, id uint) error {
+func (uc *deleteReminderUsecase) Execute(ctx context.Context, reminderID, userID uint) error {
 	_, err := uc.breaker.Execute(func() (struct{}, error) {
 		_, err := uc.repo.Reminder.
 			WithContext(ctx).
-			Where(uc.repo.Reminder.BaseID.Eq(id)).
+			Where(
+				uc.repo.Reminder.BaseID.Eq(reminderID),
+				uc.repo.Reminder.UserID.Eq(userID),
+			).
 			Delete()
 		return struct{}{}, err
 	})

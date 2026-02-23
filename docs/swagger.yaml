@@ -11,6 +11,7 @@ definitions:
     - USER_INVALID_DATA
     - USER_ALREADY_EXISTS
     - USER_NOT_FOUND
+    - Reminder_INVALID_DATA
     - AUTH_INVALID_TOKEN
     - AUTH_EXPIRED_TOKEN
     - AUTH_TOKEN_NOT_PROVIDED
@@ -18,12 +19,12 @@ definitions:
     - SERVER_INTERNAL_ERROR
     - SERVER_NOT_RESPONDING
     - SERVICE_TEMPORARILY_UNAVAILABLE
-    - Reminder_INVALID_DATA
     type: string
     x-enum-varnames:
     - ErrUserInvalidData
     - ErrUserAlreadyExists
     - ErrUserNotFound
+    - ErrReminderInvalidData
     - ErrAuthInvalidToken
     - ErrAuthExpiredToken
     - ErrAuthTokenNotProvided
@@ -31,7 +32,6 @@ definitions:
     - ErrServerInternalError
     - ErrServerNotResponding
     - ErrServiceTemporarilyUnavailable
-    - ErrReminderInvalidData
   HttpOutput:
     properties:
       data:
@@ -307,6 +307,34 @@ paths:
       security:
       - BearerAuth: []
       summary: creates new reminder
+      tags:
+      - Reminder
+  /reminder/{id}:
+    delete:
+      parameters:
+      - description: Reminder ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/HttpOutput'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ClientError'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/ClientError'
+      security:
+      - BearerAuth: []
+      summary: deletes the given reminder
       tags:
       - Reminder
   /user/me:

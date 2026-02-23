@@ -310,6 +310,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/reminder/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Reminder"
+                ],
+                "summary": "deletes the given reminder",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Reminder ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/HttpOutput"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ClientError"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "schema": {
+                            "$ref": "#/definitions/ClientError"
+                        }
+                    }
+                }
+            }
+        },
         "/user/me": {
             "get": {
                 "security": [
@@ -448,27 +493,27 @@ const docTemplate = `{
                 "USER_INVALID_DATA",
                 "USER_ALREADY_EXISTS",
                 "USER_NOT_FOUND",
+                "Reminder_INVALID_DATA",
                 "AUTH_INVALID_TOKEN",
                 "AUTH_EXPIRED_TOKEN",
                 "AUTH_TOKEN_NOT_PROVIDED",
                 "AUTH_INVALID_EMAIL_OR_PASSWORD",
                 "SERVER_INTERNAL_ERROR",
                 "SERVER_NOT_RESPONDING",
-                "SERVICE_TEMPORARILY_UNAVAILABLE",
-                "Reminder_INVALID_DATA"
+                "SERVICE_TEMPORARILY_UNAVAILABLE"
             ],
             "x-enum-varnames": [
                 "ErrUserInvalidData",
                 "ErrUserAlreadyExists",
                 "ErrUserNotFound",
+                "ErrReminderInvalidData",
                 "ErrAuthInvalidToken",
                 "ErrAuthExpiredToken",
                 "ErrAuthTokenNotProvided",
                 "ErrAuthInvalidEmailOrPassword",
                 "ErrServerInternalError",
                 "ErrServerNotResponding",
-                "ErrServiceTemporarilyUnavailable",
-                "ErrReminderInvalidData"
+                "ErrServiceTemporarilyUnavailable"
             ]
         },
         "HttpOutput": {

@@ -27,7 +27,7 @@ func NewDeleteRemindersHandler(deleteReminderUsecase usecase.DeleteReminderUseca
 //	@Tags		Reminder
 //	@Produce	json
 //	@Param		id	path		int	true	"Reminder ID"
-//	@Success	200	{object}	output.HttpOutput
+//	@Success	200	{object}	output.HttpOutput[dto.DeleteReminderOutput]
 //	@Failure	500	{object}	apperrors.ClientError
 //	@Failure	503	{object}	apperrors.ClientError
 //	@Security	BearerAuth

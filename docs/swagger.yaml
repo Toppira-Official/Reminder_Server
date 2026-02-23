@@ -1,4 +1,11 @@
 definitions:
+  AuthOutput:
+    properties:
+      access_token:
+        type: string
+      user:
+        $ref: '#/definitions/UserOutput'
+    type: object
   ClientError:
     properties:
       error:
@@ -6,8 +13,16 @@ definitions:
         - $ref: '#/definitions/ErrCode'
         example: SERVER_NOT_RESPONDING
     type: object
+  DeleteReminderOutput:
+    properties:
+      id:
+        type: integer
+    type: object
   ErrCode:
     enum:
+    - SERVER_INTERNAL_ERROR
+    - SERVER_NOT_RESPONDING
+    - SERVICE_TEMPORARILY_UNAVAILABLE
     - USER_INVALID_DATA
     - USER_ALREADY_EXISTS
     - USER_NOT_FOUND
@@ -16,11 +31,11 @@ definitions:
     - AUTH_EXPIRED_TOKEN
     - AUTH_TOKEN_NOT_PROVIDED
     - AUTH_INVALID_EMAIL_OR_PASSWORD
-    - SERVER_INTERNAL_ERROR
-    - SERVER_NOT_RESPONDING
-    - SERVICE_TEMPORARILY_UNAVAILABLE
     type: string
     x-enum-varnames:
+    - ErrServerInternalError
+    - ErrServerNotResponding
+    - ErrServiceTemporarilyUnavailable
     - ErrUserInvalidData
     - ErrUserAlreadyExists
     - ErrUserNotFound
@@ -29,14 +44,57 @@ definitions:
     - ErrAuthExpiredToken
     - ErrAuthTokenNotProvided
     - ErrAuthInvalidEmailOrPassword
-    - ErrServerInternalError
-    - ErrServerNotResponding
-    - ErrServiceTemporarilyUnavailable
-  HttpOutput:
+  GetMeOutput:
+    properties:
+      user:
+        $ref: '#/definitions/UserOutput'
+    type: object
+  GoogleOAuthOutput:
+    properties:
+      access_token:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_Toppira-Official_Reminder_Server_internal_modules_auth_usecase.GoogleUserInfo'
+    type: object
+  HttpOutput-AuthOutput:
     properties:
       data:
-        additionalProperties: {}
-        type: object
+        $ref: '#/definitions/AuthOutput'
+    type: object
+  HttpOutput-DeleteReminderOutput:
+    properties:
+      data:
+        $ref: '#/definitions/DeleteReminderOutput'
+    type: object
+  HttpOutput-GetMeOutput:
+    properties:
+      data:
+        $ref: '#/definitions/GetMeOutput'
+    type: object
+  HttpOutput-GoogleOAuthOutput:
+    properties:
+      data:
+        $ref: '#/definitions/GoogleOAuthOutput'
+    type: object
+  HttpOutput-MyRemindersOutput:
+    properties:
+      data:
+        $ref: '#/definitions/MyRemindersOutput'
+    type: object
+  HttpOutput-NewReminderOutput:
+    properties:
+      data:
+        $ref: '#/definitions/NewReminderOutput'
+    type: object
+  HttpOutput-UpdateMeAcceptedOutput:
+    properties:
+      data:
+        $ref: '#/definitions/UpdateMeAcceptedOutput'
+    type: object
+  HttpOutput-UpdateMeOutput:
+    properties:
+      data:
+        $ref: '#/definitions/UpdateMeOutput'
     type: object
   LoginWithEmailPasswordInput:
     properties:
@@ -51,6 +109,13 @@ definitions:
     required:
     - email
     - password
+    type: object
+  MyRemindersOutput:
+    properties:
+      reminders:
+        items:
+          $ref: '#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_entities.Reminder'
+        type: array
     type: object
   NewReminderInput:
     properties:
@@ -71,6 +136,11 @@ definitions:
     required:
     - scheduled_at
     - title
+    type: object
+  NewReminderOutput:
+    properties:
+      reminder:
+        $ref: '#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_entities.Reminder'
     type: object
   ReminderPriority:
     enum:
@@ -98,6 +168,11 @@ definitions:
     - email
     - password
     type: object
+  UpdateMeAcceptedOutput:
+    properties:
+      message:
+        type: string
+    type: object
   UpdateMeInput:
     properties:
       name:
@@ -110,6 +185,101 @@ definitions:
         type: string
       phone:
         example: "09123456789"
+        type: string
+    type: object
+  UpdateMeOutput:
+    properties:
+      user:
+        $ref: '#/definitions/UserOutput'
+    type: object
+  UserOutput:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      name:
+        type: string
+      phone:
+        type: string
+      profile_picture:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  github_com_Toppira-Official_Reminder_Server_internal_modules_auth_usecase.GoogleUserInfo:
+    properties:
+      email:
+        type: string
+      family_name:
+        type: string
+      name:
+        type: string
+      picture:
+        type: string
+    type: object
+  github_com_Toppira-Official_Reminder_Server_internal_shared_constants.ReminderStatus:
+    enum:
+    - pending
+    - completed
+    - missed
+    type: string
+    x-enum-varnames:
+    - Pending
+    - Completed
+    - Missed
+  github_com_Toppira-Official_Reminder_Server_internal_shared_entities.Reminder:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      priority:
+        $ref: '#/definitions/ReminderPriority'
+      reminder_times:
+        items:
+          type: string
+        type: array
+      scheduled_at:
+        type: string
+      status:
+        $ref: '#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_constants.ReminderStatus'
+      title:
+        type: string
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_entities.User'
+      user_id:
+        type: integer
+    type: object
+  github_com_Toppira-Official_Reminder_Server_internal_shared_entities.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      name:
+        type: string
+      phone:
+        type: string
+      profile_picture:
+        type: string
+      reminders:
+        items:
+          $ref: '#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_entities.Reminder'
+        type: array
+      updated_at:
         type: string
     type: object
 host: localhost:3000
@@ -138,7 +308,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/HttpOutput'
+            $ref: '#/definitions/HttpOutput-GoogleOAuthOutput'
         "401":
           description: Unauthorized
           schema:
@@ -181,7 +351,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/HttpOutput'
+            $ref: '#/definitions/HttpOutput-AuthOutput'
         "400":
           description: Bad Request
           schema:
@@ -218,7 +388,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/HttpOutput'
+            $ref: '#/definitions/HttpOutput-AuthOutput'
         "400":
           description: Bad Request
           schema:
@@ -257,7 +427,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/HttpOutput'
+            $ref: '#/definitions/HttpOutput-MyRemindersOutput'
         "400":
           description: Bad Request
           schema:
@@ -291,7 +461,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/HttpOutput'
+            $ref: '#/definitions/HttpOutput-NewReminderOutput'
         "400":
           description: Bad Request
           schema:
@@ -323,7 +493,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/HttpOutput'
+            $ref: '#/definitions/HttpOutput-DeleteReminderOutput'
         "500":
           description: Internal Server Error
           schema:
@@ -347,7 +517,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/HttpOutput'
+            $ref: '#/definitions/HttpOutput-GetMeOutput'
         "400":
           description: Bad Request
           schema:
@@ -385,11 +555,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/HttpOutput'
+            $ref: '#/definitions/HttpOutput-UpdateMeOutput'
         "202":
           description: Accepted
           schema:
-            $ref: '#/definitions/HttpOutput'
+            $ref: '#/definitions/HttpOutput-UpdateMeAcceptedOutput'
         "400":
           description: Bad Request
           schema:

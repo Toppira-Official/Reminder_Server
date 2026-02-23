@@ -26,7 +26,7 @@ func NewMyRemindersHandler(listRemindersUsecase usecase.ListRemindersUsecase) *M
 //	@Produce	json
 //	@Param		page	query		int	false	"Page number"		default(1)
 //	@Param		limit	query		int	false	"Items per page"	default(10)
-//	@Success	200		{object}	output.HttpOutput
+//	@Success	200		{object}	output.HttpOutput[dto.MyRemindersOutput]
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
 //	@Failure	503		{object}	apperrors.ClientError

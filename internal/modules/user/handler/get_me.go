@@ -22,7 +22,7 @@ func NewGetMeHandler() *GetMeHandler {
 //	@Tags		User
 //	@Accept		json
 //	@Produce	json
-//	@Success	200	{object}	output.HttpOutput
+//	@Success	200	{object}	output.HttpOutput[dto.GetMeOutput]
 //	@Failure	400	{object}	apperrors.ClientError
 //	@Failure	401	{object}	apperrors.ClientError
 //	@Failure	500	{object}	apperrors.ClientError

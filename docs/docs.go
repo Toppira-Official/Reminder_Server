@@ -44,7 +44,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/HttpOutput"
+                            "$ref": "#/definitions/HttpOutput-GoogleOAuthOutput"
                         }
                     },
                     "401": {
@@ -111,7 +111,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/HttpOutput"
+                            "$ref": "#/definitions/HttpOutput-AuthOutput"
                         }
                     },
                     "400": {
@@ -168,7 +168,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/HttpOutput"
+                            "$ref": "#/definitions/HttpOutput-AuthOutput"
                         }
                     },
                     "400": {
@@ -232,7 +232,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/HttpOutput"
+                            "$ref": "#/definitions/HttpOutput-MyRemindersOutput"
                         }
                     },
                     "400": {
@@ -286,7 +286,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/HttpOutput"
+                            "$ref": "#/definitions/HttpOutput-NewReminderOutput"
                         }
                     },
                     "400": {
@@ -337,7 +337,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/HttpOutput"
+                            "$ref": "#/definitions/HttpOutput-DeleteReminderOutput"
                         }
                     },
                     "500": {
@@ -376,7 +376,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/HttpOutput"
+                            "$ref": "#/definitions/HttpOutput-GetMeOutput"
                         }
                     },
                     "400": {
@@ -436,13 +436,13 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/HttpOutput"
+                            "$ref": "#/definitions/HttpOutput-UpdateMeOutput"
                         }
                     },
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/HttpOutput"
+                            "$ref": "#/definitions/HttpOutput-UpdateMeAcceptedOutput"
                         }
                     },
                     "400": {
@@ -474,6 +474,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "AuthOutput": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/UserOutput"
+                }
+            }
+        },
         "ClientError": {
             "type": "object",
             "properties": {
@@ -487,9 +498,20 @@ const docTemplate = `{
                 }
             }
         },
+        "DeleteReminderOutput": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "ErrCode": {
             "type": "string",
             "enum": [
+                "SERVER_INTERNAL_ERROR",
+                "SERVER_NOT_RESPONDING",
+                "SERVICE_TEMPORARILY_UNAVAILABLE",
                 "USER_INVALID_DATA",
                 "USER_ALREADY_EXISTS",
                 "USER_NOT_FOUND",
@@ -497,12 +519,12 @@ const docTemplate = `{
                 "AUTH_INVALID_TOKEN",
                 "AUTH_EXPIRED_TOKEN",
                 "AUTH_TOKEN_NOT_PROVIDED",
-                "AUTH_INVALID_EMAIL_OR_PASSWORD",
-                "SERVER_INTERNAL_ERROR",
-                "SERVER_NOT_RESPONDING",
-                "SERVICE_TEMPORARILY_UNAVAILABLE"
+                "AUTH_INVALID_EMAIL_OR_PASSWORD"
             ],
             "x-enum-varnames": [
+                "ErrServerInternalError",
+                "ErrServerNotResponding",
+                "ErrServiceTemporarilyUnavailable",
                 "ErrUserInvalidData",
                 "ErrUserAlreadyExists",
                 "ErrUserNotFound",
@@ -510,18 +532,89 @@ const docTemplate = `{
                 "ErrAuthInvalidToken",
                 "ErrAuthExpiredToken",
                 "ErrAuthTokenNotProvided",
-                "ErrAuthInvalidEmailOrPassword",
-                "ErrServerInternalError",
-                "ErrServerNotResponding",
-                "ErrServiceTemporarilyUnavailable"
+                "ErrAuthInvalidEmailOrPassword"
             ]
         },
-        "HttpOutput": {
+        "GetMeOutput": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/UserOutput"
+                }
+            }
+        },
+        "GoogleOAuthOutput": {
+            "type": "object",
+            "properties": {
+                "access_token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/github_com_Toppira-Official_Reminder_Server_internal_modules_auth_usecase.GoogleUserInfo"
+                }
+            }
+        },
+        "HttpOutput-AuthOutput": {
             "type": "object",
             "properties": {
                 "data": {
-                    "type": "object",
-                    "additionalProperties": {}
+                    "$ref": "#/definitions/AuthOutput"
+                }
+            }
+        },
+        "HttpOutput-DeleteReminderOutput": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/DeleteReminderOutput"
+                }
+            }
+        },
+        "HttpOutput-GetMeOutput": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/GetMeOutput"
+                }
+            }
+        },
+        "HttpOutput-GoogleOAuthOutput": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/GoogleOAuthOutput"
+                }
+            }
+        },
+        "HttpOutput-MyRemindersOutput": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/MyRemindersOutput"
+                }
+            }
+        },
+        "HttpOutput-NewReminderOutput": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/NewReminderOutput"
+                }
+            }
+        },
+        "HttpOutput-UpdateMeAcceptedOutput": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/UpdateMeAcceptedOutput"
+                }
+            }
+        },
+        "HttpOutput-UpdateMeOutput": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "$ref": "#/definitions/UpdateMeOutput"
                 }
             }
         },
@@ -541,6 +634,17 @@ const docTemplate = `{
                     "maxLength": 72,
                     "minLength": 8,
                     "example": "StrongPassword1234"
+                }
+            }
+        },
+        "MyRemindersOutput": {
+            "type": "object",
+            "properties": {
+                "reminders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_entities.Reminder"
+                    }
                 }
             }
         },
@@ -570,6 +674,14 @@ const docTemplate = `{
                     "type": "string",
                     "maxLength": 200,
                     "minLength": 3
+                }
+            }
+        },
+        "NewReminderOutput": {
+            "type": "object",
+            "properties": {
+                "reminder": {
+                    "$ref": "#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_entities.Reminder"
                 }
             }
         },
@@ -607,6 +719,14 @@ const docTemplate = `{
                 }
             }
         },
+        "UpdateMeAcceptedOutput": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "UpdateMeInput": {
             "type": "object",
             "properties": {
@@ -623,6 +743,149 @@ const docTemplate = `{
                 "phone": {
                     "type": "string",
                     "example": "09123456789"
+                }
+            }
+        },
+        "UpdateMeOutput": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "$ref": "#/definitions/UserOutput"
+                }
+            }
+        },
+        "UserOutput": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "profile_picture": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_Toppira-Official_Reminder_Server_internal_modules_auth_usecase.GoogleUserInfo": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "family_name": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_Toppira-Official_Reminder_Server_internal_shared_constants.ReminderStatus": {
+            "type": "string",
+            "enum": [
+                "pending",
+                "completed",
+                "missed"
+            ],
+            "x-enum-varnames": [
+                "Pending",
+                "Completed",
+                "Missed"
+            ]
+        },
+        "github_com_Toppira-Official_Reminder_Server_internal_shared_entities.Reminder": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "priority": {
+                    "$ref": "#/definitions/ReminderPriority"
+                },
+                "reminder_times": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "scheduled_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_constants.ReminderStatus"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_entities.User"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github_com_Toppira-Official_Reminder_Server_internal_shared_entities.User": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "profile_picture": {
+                    "type": "string"
+                },
+                "reminders": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_Toppira-Official_Reminder_Server_internal_shared_entities.Reminder"
+                    }
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         }

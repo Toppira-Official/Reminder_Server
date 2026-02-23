@@ -31,7 +31,7 @@ func NewNewReminderHandler(
 //	@Accept		json
 //	@Produce	json
 //	@Param		body	body		dto.NewReminderInput	true	"New Reminder Input"
-//	@Success	201		{object}	output.HttpOutput
+//	@Success	201		{object}	output.HttpOutput[dto.NewReminderOutput]
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
 //	@Failure	503		{object}	apperrors.ClientError

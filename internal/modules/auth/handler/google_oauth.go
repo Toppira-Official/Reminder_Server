@@ -70,7 +70,7 @@ func (h *GoogleOauthHandler) GetGoogleOauthRedirectURL(c *gin.Context) {
 //	@Tags		Authentication
 //	@Param		code	query		string	true	"Code"
 //	@Param		state	query		string	true	"State"
-//	@Success	200		{object}	output.HttpOutput
+//	@Success	200		{object}	output.HttpOutput[dto.GoogleOAuthOutput]
 //	@Failure	401		{object}	errors.ClientError
 //	@Failure	500		{object}	errors.ClientError
 //	@Router		/auth/google-oauth/callback [get]

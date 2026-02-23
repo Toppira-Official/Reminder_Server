@@ -39,8 +39,8 @@ func NewUpdateMeHandler(updateUserUsecase usecase.UpdateUserUsecase, q *queues.C
 //	@Accept		json
 //	@Produce	json
 //	@Param		body	body		dto.UpdateMeInput	true	"Update Me Input"
-//	@Success	200		{object}	output.HttpOutput
-//	@Success	202		{object}	output.HttpOutput
+//	@Success	200		{object}	output.HttpOutput[dto.UpdateMeOutput]
+//	@Success	202		{object}	output.HttpOutput[dto.UpdateMeAcceptedOutput]
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	401		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError

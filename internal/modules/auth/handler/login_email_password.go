@@ -38,7 +38,7 @@ func NewLoginHandler(
 //	@Accept		json
 //	@Produce	json
 //	@Param		body	body		dto.LoginWithEmailPasswordInput	true	"Login Input"
-//	@Success	200		{object}	output.HttpOutput
+//	@Success	200		{object}	output.HttpOutput[dto.AuthOutput]
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	404		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError

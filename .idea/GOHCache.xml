@@ -698,7 +698,7 @@
         <entry key="file://$PROJECT_DIR$/internal/shared/dto/http.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771618502316" />
+              <option name="lastModified" value="1771874957224" />
               <option name="schema">
                 <list>
                   <option value="HttpOutput" />

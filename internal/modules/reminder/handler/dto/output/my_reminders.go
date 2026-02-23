@@ -1,4 +1,4 @@
-package dto
+package output
 
 import "github.com/Toppira-Official/Reminder_Server/internal/shared/entities"
 

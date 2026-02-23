@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Toppira-Official/Reminder_Server/internal/modules/auth/handler/dto"
+	authInput "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/handler/dto/input"
+	authOutput "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/handler/dto/output"
 	authUsecase "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/usecase"
 	userUsecase "github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase"
-
-	output "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
+	sharedDto "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"github.com/gin-gonic/gin"
 )
@@ -37,8 +37,8 @@ func NewLoginHandler(
 //	@Tags		Authentication
 //	@Accept		json
 //	@Produce	json
-//	@Param		body	body		dto.LoginWithEmailPasswordInput	true	"Login Input"
-//	@Success	200		{object}	output.HttpOutput[dto.AuthOutput]
+//	@Param		body	body		authInput.LoginWithEmailPasswordInput	true	"Login Input"
+//	@Success	200		{object}	sharedDto.HttpOutput[authOutput.AuthOutput]
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	404		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
@@ -47,7 +47,7 @@ func NewLoginHandler(
 func (hl *LoginHandler) LoginWithEmailPassword(c *gin.Context) {
 	ctx := c.Request.Context()
 
-	var input dto.LoginWithEmailPasswordInput
+	var input authInput.LoginWithEmailPasswordInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.Error(apperrors.E(apperrors.ErrUserInvalidData, err))
 		return
@@ -72,9 +72,9 @@ func (hl *LoginHandler) LoginWithEmailPassword(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, output.HttpOutput[dto.AuthOutput]{
-		Data: dto.AuthOutput{
-			User:        output.ToUserOutput(user),
+	c.JSON(http.StatusOK, sharedDto.HttpOutput[authOutput.AuthOutput]{
+		Data: authOutput.AuthOutput{
+			User:        sharedDto.ToUserOutput(user),
 			AccessToken: accessToken,
 		},
 	})

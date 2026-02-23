@@ -1,4 +1,4 @@
-package dto
+package output
 
 import sharedDto "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 

@@ -3,11 +3,11 @@ package handler
 import (
 	"net/http"
 
-	"github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler/dto"
+	reminderInput "github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler/dto/input"
+	reminderOutput "github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler/dto/output"
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/usecase"
 	"github.com/Toppira-Official/Reminder_Server/internal/shared/entities"
-
-	output "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
+	sharedDto "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 
 	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"github.com/gin-gonic/gin"
@@ -27,7 +27,7 @@ func NewDeleteRemindersHandler(deleteReminderUsecase usecase.DeleteReminderUseca
 //	@Tags		Reminder
 //	@Produce	json
 //	@Param		id	path		int	true	"Reminder ID"
-//	@Success	200	{object}	output.HttpOutput[dto.DeleteReminderOutput]
+//	@Success	200	{object}	sharedDto.HttpOutput[reminderOutput.DeleteReminderOutput]
 //	@Failure	500	{object}	apperrors.ClientError
 //	@Failure	503	{object}	apperrors.ClientError
 //	@Security	BearerAuth
@@ -45,7 +45,7 @@ func (hl *DeleteRemindersHandler) DeleteReminder(c *gin.Context) {
 		return
 	}
 
-	var q dto.DeleteReminderInput
+	var q reminderInput.DeleteReminderInput
 	if err := c.ShouldBindUri(&q); err != nil {
 		c.Error(apperrors.E(apperrors.ErrReminderInvalidData))
 		return
@@ -56,8 +56,8 @@ func (hl *DeleteRemindersHandler) DeleteReminder(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, output.HttpOutput[dto.DeleteReminderOutput]{
-		Data: dto.DeleteReminderOutput{
+	c.JSON(http.StatusOK, sharedDto.HttpOutput[reminderOutput.DeleteReminderOutput]{
+		Data: reminderOutput.DeleteReminderOutput{
 			ID: q.ID,
 		},
 	})

@@ -4,11 +4,12 @@ import (
 	"net/http"
 	"strconv"
 
-	authDto "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/handler/dto"
+	authInput "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/handler/dto/input"
+	authOutput "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/handler/dto/output"
 	authUsecase "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/usecase"
 	userUsecase "github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase"
 	userInput "github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase/input"
-	output "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
+	sharedDto "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"github.com/gin-gonic/gin"
 )
@@ -37,8 +38,8 @@ func NewSignUpHandler(
 //	@Tags		Authentication
 //	@Accept		json
 //	@Produce	json
-//	@Param		body	body		authDto.SignUpWithEmailPasswordInput	true	"Sign Up Input"
-//	@Success	201		{object}	output.HttpOutput[authDto.AuthOutput]
+//	@Param		body	body		authInput.SignUpWithEmailPasswordInput	true	"Sign Up Input"
+//	@Success	201		{object}	sharedDto.HttpOutput[authOutput.AuthOutput]
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	409		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
@@ -47,7 +48,7 @@ func NewSignUpHandler(
 func (hl *SignUpHandler) SignUpWithEmailPassword(c *gin.Context) {
 	ctx := c.Request.Context()
 
-	var input authDto.SignUpWithEmailPasswordInput
+	var input authInput.SignUpWithEmailPasswordInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.Error(apperrors.E(apperrors.ErrUserInvalidData, err))
 		return
@@ -73,9 +74,9 @@ func (hl *SignUpHandler) SignUpWithEmailPassword(c *gin.Context) {
 
 	savedUser.Password = nil
 
-	c.JSON(http.StatusCreated, output.HttpOutput[authDto.AuthOutput]{
-		Data: authDto.AuthOutput{
-			User:        output.ToUserOutput(savedUser),
+	c.JSON(http.StatusCreated, sharedDto.HttpOutput[authOutput.AuthOutput]{
+		Data: authOutput.AuthOutput{
+			User:        sharedDto.ToUserOutput(savedUser),
 			AccessToken: accessToken,
 		},
 	})

@@ -4,11 +4,12 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/Toppira-Official/Reminder_Server/internal/modules/user/handler/dto"
+	dtoInput "github.com/Toppira-Official/Reminder_Server/internal/modules/user/handler/dto/input"
+	userOutput "github.com/Toppira-Official/Reminder_Server/internal/modules/user/handler/dto/output"
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/user/jobs"
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase"
-	userInput "github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase/input"
-	output "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
+	userUcInput "github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase/input"
+	sharedDto "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 	"github.com/Toppira-Official/Reminder_Server/internal/shared/entities"
 	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"github.com/Toppira-Official/Reminder_Server/internal/shared/queues"
@@ -38,9 +39,9 @@ func NewUpdateMeHandler(updateUserUsecase usecase.UpdateUserUsecase, q *queues.C
 //	@Tags		User
 //	@Accept		json
 //	@Produce	json
-//	@Param		body	body		dto.UpdateMeInput	true	"Update Me Input"
-//	@Success	200		{object}	output.HttpOutput[dto.UpdateMeOutput]
-//	@Success	202		{object}	output.HttpOutput[dto.UpdateMeAcceptedOutput]
+//	@Param		body	body		dtoInput.UpdateMeInput	true	"Update Me Input"
+//	@Success	200		{object}	sharedDto.HttpOutput[userOutput.UpdateMeOutput]
+//	@Success	202		{object}	sharedDto.HttpOutput[userOutput.UpdateMeAcceptedOutput]
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	401		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
@@ -62,13 +63,13 @@ func (hl *UpdateMeHandler) UpdateMyInfo(c *gin.Context) {
 		return
 	}
 
-	var input dto.UpdateMeInput
+	var input dtoInput.UpdateMeInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.Error(apperrors.E(apperrors.ErrUserInvalidData, err))
 		return
 	}
 
-	usecaseInput := &userInput.UpdateUserInput{
+	usecaseInput := &userUcInput.UpdateUserInput{
 		ID:       user.ID,
 		Name:     input.Name,
 		Password: input.Password,
@@ -77,9 +78,9 @@ func (hl *UpdateMeHandler) UpdateMyInfo(c *gin.Context) {
 	updatedUser, err := hl.updateUserUsecase.Execute(ctx, usecaseInput)
 	if err == nil {
 		updatedUser.Password = nil
-		c.JSON(http.StatusOK, output.HttpOutput[dto.UpdateMeOutput]{
-			Data: dto.UpdateMeOutput{
-				User: output.ToUserOutput(updatedUser),
+		c.JSON(http.StatusOK, sharedDto.HttpOutput[userOutput.UpdateMeOutput]{
+			Data: userOutput.UpdateMeOutput{
+				User: sharedDto.ToUserOutput(updatedUser),
 			},
 		})
 
@@ -98,8 +99,8 @@ func (hl *UpdateMeHandler) UpdateMyInfo(c *gin.Context) {
 			c.Error(apperrors.E(apperrors.ErrServiceTemporarilyUnavailable, enqErr))
 			return
 		}
-		c.JSON(http.StatusAccepted, output.HttpOutput[dto.UpdateMeAcceptedOutput]{
-			Data: dto.UpdateMeAcceptedOutput{
+		c.JSON(http.StatusAccepted, sharedDto.HttpOutput[userOutput.UpdateMeAcceptedOutput]{
+			Data: userOutput.UpdateMeAcceptedOutput{
 				Message: "Update queued for processing",
 			},
 		})

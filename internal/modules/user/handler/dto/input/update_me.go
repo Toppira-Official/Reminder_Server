@@ -1,4 +1,4 @@
-package dto
+package input
 
 type UpdateMeInput struct {
 	Name     *string `json:"name,omitempty" example:"John Doe"`

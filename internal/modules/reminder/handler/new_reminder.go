@@ -3,10 +3,11 @@ package handler
 import (
 	"net/http"
 
-	"github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler/dto"
+	reminderInput "github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler/dto/input"
+	reminderOutput "github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler/dto/output"
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/usecase"
-	reminderInput "github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/usecase/input"
-	output "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
+	usecaseInput "github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/usecase/input"
+	sharedDto "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 	"github.com/Toppira-Official/Reminder_Server/internal/shared/entities"
 	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"github.com/gin-gonic/gin"
@@ -30,8 +31,8 @@ func NewNewReminderHandler(
 //	@Tags		Reminder
 //	@Accept		json
 //	@Produce	json
-//	@Param		body	body		dto.NewReminderInput	true	"New Reminder Input"
-//	@Success	201		{object}	output.HttpOutput[dto.NewReminderOutput]
+//	@Param		body	body		reminderInput.NewReminderInput	true	"New Reminder Input"
+//	@Success	201		{object}	sharedDto.HttpOutput[reminderOutput.NewReminderOutput]
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
 //	@Failure	503		{object}	apperrors.ClientError
@@ -52,13 +53,13 @@ func (hl *NewReminderHandler) NewReminder(c *gin.Context) {
 		return
 	}
 
-	var input dto.NewReminderInput
+	var input reminderInput.NewReminderInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.Error(apperrors.E(apperrors.ErrReminderInvalidData, err))
 		return
 	}
 
-	usecaseInput := &reminderInput.CreateReminderInput{
+	ucInput := &usecaseInput.CreateReminderInput{
 		Title:         input.Title,
 		Description:   input.Description,
 		Priority:      input.Priority,
@@ -66,14 +67,14 @@ func (hl *NewReminderHandler) NewReminder(c *gin.Context) {
 		ScheduledAt:   input.ScheduledAt,
 		UserID:        user.ID,
 	}
-	newReminder, err := hl.createReminderUsecase.Execute(ctx, usecaseInput)
+	newReminder, err := hl.createReminderUsecase.Execute(ctx, ucInput)
 	if err != nil {
 		c.Error(err)
 		return
 	}
 
-	c.JSON(http.StatusCreated, output.HttpOutput[dto.NewReminderOutput]{
-		Data: dto.NewReminderOutput{
+	c.JSON(http.StatusCreated, sharedDto.HttpOutput[reminderOutput.NewReminderOutput]{
+		Data: reminderOutput.NewReminderOutput{
 			Reminder: newReminder,
 		},
 	})

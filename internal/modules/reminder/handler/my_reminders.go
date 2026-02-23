@@ -3,9 +3,9 @@ package handler
 import (
 	"net/http"
 
-	"github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler/dto"
+	reminderOutput "github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/handler/dto/output"
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/reminder/usecase"
-	output "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
+	sharedDto "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 	"github.com/Toppira-Official/Reminder_Server/internal/shared/entities"
 	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"github.com/gin-gonic/gin"
@@ -26,14 +26,14 @@ func NewMyRemindersHandler(listRemindersUsecase usecase.ListRemindersUsecase) *M
 //	@Produce	json
 //	@Param		page	query		int	false	"Page number"		default(1)
 //	@Param		limit	query		int	false	"Items per page"	default(10)
-//	@Success	200		{object}	output.HttpOutput[dto.MyRemindersOutput]
+//	@Success	200		{object}	sharedDto.HttpOutput[reminderOutput.MyRemindersOutput]
 //	@Failure	400		{object}	apperrors.ClientError
 //	@Failure	500		{object}	apperrors.ClientError
 //	@Failure	503		{object}	apperrors.ClientError
 //	@Security	BearerAuth
 //	@Router		/reminder [get]
 func (hl *MyRemindersHandler) MyReminders(c *gin.Context) {
-	var q output.PaginationInput
+	var q sharedDto.PaginationInput
 	if err := c.ShouldBindQuery(&q); err != nil {
 		c.Error(apperrors.E(apperrors.ErrReminderInvalidData))
 		return
@@ -66,8 +66,8 @@ func (hl *MyRemindersHandler) MyReminders(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, output.HttpOutput[dto.MyRemindersOutput]{
-		Data: dto.MyRemindersOutput{
+	c.JSON(http.StatusOK, sharedDto.HttpOutput[reminderOutput.MyRemindersOutput]{
+		Data: reminderOutput.MyRemindersOutput{
 			Reminders: reminders,
 		},
 	})

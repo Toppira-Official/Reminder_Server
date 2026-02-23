@@ -8,11 +8,11 @@ import (
 	"strings"
 
 	"github.com/Toppira-Official/Reminder_Server/internal/configs"
-	"github.com/Toppira-Official/Reminder_Server/internal/modules/auth/handler/dto"
+	authOutput "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/handler/dto/output"
 	authUsecase "github.com/Toppira-Official/Reminder_Server/internal/modules/auth/usecase"
 	userUsecase "github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase"
 	"github.com/Toppira-Official/Reminder_Server/internal/modules/user/usecase/input"
-	output "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
+	sharedDto "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 	_ "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"gorm.io/gorm"
 
@@ -70,7 +70,7 @@ func (h *GoogleOauthHandler) GetGoogleOauthRedirectURL(c *gin.Context) {
 //	@Tags		Authentication
 //	@Param		code	query		string	true	"Code"
 //	@Param		state	query		string	true	"State"
-//	@Success	200		{object}	output.HttpOutput[dto.GoogleOAuthOutput]
+//	@Success	200		{object}	sharedDto.HttpOutput[authOutput.GoogleOAuthOutput]
 //	@Failure	401		{object}	errors.ClientError
 //	@Failure	500		{object}	errors.ClientError
 //	@Router		/auth/google-oauth/callback [get]
@@ -107,8 +107,8 @@ func (h *GoogleOauthHandler) GoogleOauthCallback(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, output.HttpOutput[dto.GoogleOAuthOutput]{
-		Data: dto.GoogleOAuthOutput{
+	c.JSON(http.StatusOK, sharedDto.HttpOutput[authOutput.GoogleOAuthOutput]{
+		Data: authOutput.GoogleOAuthOutput{
 			User:        userInfo,
 			AccessToken: accessToken,
 		},

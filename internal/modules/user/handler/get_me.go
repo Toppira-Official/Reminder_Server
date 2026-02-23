@@ -3,8 +3,8 @@ package handler
 import (
 	"net/http"
 
-	"github.com/Toppira-Official/Reminder_Server/internal/modules/user/handler/dto"
-	output "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
+	userOutput "github.com/Toppira-Official/Reminder_Server/internal/modules/user/handler/dto/output"
+	sharedDto "github.com/Toppira-Official/Reminder_Server/internal/shared/dto"
 	"github.com/Toppira-Official/Reminder_Server/internal/shared/entities"
 	apperrors "github.com/Toppira-Official/Reminder_Server/internal/shared/errors"
 	"github.com/gin-gonic/gin"
@@ -22,7 +22,7 @@ func NewGetMeHandler() *GetMeHandler {
 //	@Tags		User
 //	@Accept		json
 //	@Produce	json
-//	@Success	200	{object}	output.HttpOutput[dto.GetMeOutput]
+//	@Success	200	{object}	sharedDto.HttpOutput[userOutput.GetMeOutput]
 //	@Failure	400	{object}	apperrors.ClientError
 //	@Failure	401	{object}	apperrors.ClientError
 //	@Failure	500	{object}	apperrors.ClientError
@@ -42,9 +42,9 @@ func (hl *GetMeHandler) GetMyInfo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, output.HttpOutput[dto.GetMeOutput]{
-		Data: dto.GetMeOutput{
-			User: output.ToUserOutput(user),
+	c.JSON(http.StatusOK, sharedDto.HttpOutput[userOutput.GetMeOutput]{
+		Data: userOutput.GetMeOutput{
+			User: sharedDto.ToUserOutput(user),
 		},
 	})
 }

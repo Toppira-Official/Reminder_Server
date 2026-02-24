@@ -239,6 +239,7 @@
         <entry key="createUserUsecase">
           <value>
             <set>
+              <option value="file://$PROJECT_DIR$/internal/modules/notification/usecase/subscribe_firebase.go" />
               <option value="file://$PROJECT_DIR$/internal/modules/user/usecase/create.go" />
             </set>
           </value>
@@ -331,6 +332,13 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/internal/shared/repositories/reminders.gen.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="subscribeFirebaseUsecase">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/modules/notification/usecase/subscribe_firebase.go" />
             </set>
           </value>
         </entry>
@@ -672,7 +680,7 @@
         <entry key="file://$PROJECT_DIR$/internal/modules/notification/usecase/input/subscribe_firebase.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771967695299" />
+              <option name="lastModified" value="1771967761329" />
               <option name="schema">
                 <list>
                   <option value="SubscribeFirebaseInput" />
@@ -684,7 +692,12 @@
         <entry key="file://$PROJECT_DIR$/internal/modules/notification/usecase/subscribe_firebase.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771967642569" />
+              <option name="lastModified" value="1771968205378" />
+              <option name="schema">
+                <list>
+                  <option value="subscribeFirebaseUsecase" />
+                </list>
+              </option>
             </ScannedPath>
           </value>
         </entry>
@@ -1223,6 +1236,7 @@
         <entry key="reminder_do" value="reminderDo" />
         <entry key="sign_up_handler" value="SignUpHandler" />
         <entry key="subscribe_firebase_input" value="SubscribeFirebaseInput" />
+        <entry key="subscribe_firebase_usecase" value="subscribeFirebaseUsecase" />
         <entry key="update_me_handler" value="UpdateMeHandler" />
         <entry key="update_user_input" value="UpdateUserInput" />
         <entry key="update_user_job" value="updateUserJob" />

@@ -9,5 +9,6 @@ func LoadMigrations(db *gorm.DB) error {
 	return db.AutoMigrate(
 		&entities.User{},
 		&entities.Reminder{},
+		&entities.FirebaseSubscriber{},
 	)
 }

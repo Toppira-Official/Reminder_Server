@@ -15,6 +15,7 @@ func main() {
 	g.ApplyBasic(
 		entities.User{},
 		entities.Reminder{},
+		entities.FirebaseSubscriber{},
 	)
 
 	g.Execute()

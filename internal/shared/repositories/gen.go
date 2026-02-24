@@ -16,39 +16,44 @@ import (
 )
 
 var (
-	Q        = new(Query)
-	Reminder *reminder
-	User     *user
+	Q                  = new(Query)
+	FirebaseSubscriber *firebaseSubscriber
+	Reminder           *reminder
+	User               *user
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
+	FirebaseSubscriber = &Q.FirebaseSubscriber
 	Reminder = &Q.Reminder
 	User = &Q.User
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:       db,
-		Reminder: newReminder(db, opts...),
-		User:     newUser(db, opts...),
+		db:                 db,
+		FirebaseSubscriber: newFirebaseSubscriber(db, opts...),
+		Reminder:           newReminder(db, opts...),
+		User:               newUser(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Reminder reminder
-	User     user
+	FirebaseSubscriber firebaseSubscriber
+	Reminder           reminder
+	User               user
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:       db,
-		Reminder: q.Reminder.clone(db),
-		User:     q.User.clone(db),
+		db:                 db,
+		FirebaseSubscriber: q.FirebaseSubscriber.clone(db),
+		Reminder:           q.Reminder.clone(db),
+		User:               q.User.clone(db),
 	}
 }
 
@@ -62,21 +67,24 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:       db,
-		Reminder: q.Reminder.replaceDB(db),
-		User:     q.User.replaceDB(db),
+		db:                 db,
+		FirebaseSubscriber: q.FirebaseSubscriber.replaceDB(db),
+		Reminder:           q.Reminder.replaceDB(db),
+		User:               q.User.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Reminder IReminderDo
-	User     IUserDo
+	FirebaseSubscriber IFirebaseSubscriberDo
+	Reminder           IReminderDo
+	User               IUserDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Reminder: q.Reminder.WithContext(ctx),
-		User:     q.User.WithContext(ctx),
+		FirebaseSubscriber: q.FirebaseSubscriber.WithContext(ctx),
+		Reminder:           q.Reminder.WithContext(ctx),
+		User:               q.User.WithContext(ctx),
 	}
 }
 

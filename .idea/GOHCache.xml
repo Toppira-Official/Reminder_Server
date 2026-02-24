@@ -80,6 +80,13 @@
             </set>
           </value>
         </entry>
+        <entry key="FirebaseSubscriber">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/shared/entities/firebase_subscriber.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="GetMeHandler">
           <value>
             <set>
@@ -191,6 +198,13 @@
           <value>
             <set>
               <option value="file://$PROJECT_DIR$/internal/modules/auth/handler/sign_up_email_password.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SubscribeFirebaseInput">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/modules/notification/usecase/input/subscribe_firebase.go" />
             </set>
           </value>
         </entry>
@@ -383,7 +397,7 @@
         <entry key="file://$PROJECT_DIR$/cmd/gen/main.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771618502311" />
+              <option name="lastModified" value="1771967506971" />
             </ScannedPath>
           </value>
         </entry>
@@ -450,7 +464,7 @@
         <entry key="file://$PROJECT_DIR$/internal/configs/migrations.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771618502313" />
+              <option name="lastModified" value="1771967530457" />
             </ScannedPath>
           </value>
         </entry>
@@ -644,7 +658,7 @@
         <entry key="file://$PROJECT_DIR$/internal/modules/notification/module.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771965615161" />
+              <option name="lastModified" value="1771966983848" />
             </ScannedPath>
           </value>
         </entry>
@@ -652,6 +666,25 @@
           <value>
             <ScannedPath>
               <option name="lastModified" value="1771964466203" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/modules/notification/usecase/input/subscribe_firebase.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1771967695299" />
+              <option name="schema">
+                <list>
+                  <option value="SubscribeFirebaseInput" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/modules/notification/usecase/subscribe_firebase.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1771967642569" />
             </ScannedPath>
           </value>
         </entry>
@@ -942,6 +975,18 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/internal/shared/entities/firebase_subscriber.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1771967718991" />
+              <option name="schema">
+                <list>
+                  <option value="FirebaseSubscriber" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/internal/shared/entities/reminder.go">
           <value>
             <ScannedPath>
@@ -1151,6 +1196,7 @@
         <entry key="find_user_by_id_usecase" value="findUserByIDUsecase" />
         <entry key="firebase" value="Firebase" />
         <entry key="firebase_adaptor" value="FirebaseAdaptor" />
+        <entry key="firebase_subscriber" value="FirebaseSubscriber" />
         <entry key="generate_jwt_usecase" value="generateJwtUsecase" />
         <entry key="get_me_handler" value="GetMeHandler" />
         <entry key="google_oauth_callback_usecase" value="googleOauthCallbackUsecase" />
@@ -1176,6 +1222,7 @@
         <entry key="reminder_belongs_to_user_tx" value="reminderBelongsToUserTx" />
         <entry key="reminder_do" value="reminderDo" />
         <entry key="sign_up_handler" value="SignUpHandler" />
+        <entry key="subscribe_firebase_input" value="SubscribeFirebaseInput" />
         <entry key="update_me_handler" value="UpdateMeHandler" />
         <entry key="update_user_input" value="UpdateUserInput" />
         <entry key="update_user_job" value="updateUserJob" />

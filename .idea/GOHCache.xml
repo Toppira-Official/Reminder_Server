@@ -66,6 +66,20 @@
             </set>
           </value>
         </entry>
+        <entry key="Firebase">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/modules/notification/adapters/firebase.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="FirebaseAdaptor">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/modules/notification/adapters/firebase.go" />
+            </set>
+          </value>
+        </entry>
         <entry key="GetMeHandler">
           <value>
             <set>
@@ -376,7 +390,7 @@
         <entry key="file://$PROJECT_DIR$/cmd/http/main.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771869282383" />
+              <option name="lastModified" value="1771964210371" />
             </ScannedPath>
           </value>
         </entry>
@@ -589,6 +603,18 @@
             </ScannedPath>
           </value>
         </entry>
+        <entry key="file://$PROJECT_DIR$/internal/modules/notification/adapters/firebase.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1771965676801" />
+              <option name="schema">
+                <list>
+                  <option value="FirebaseAdaptor" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/internal/modules/notification/contract/sender.go">
           <value>
             <ScannedPath>
@@ -606,12 +632,26 @@
         <entry key="file://$PROJECT_DIR$/internal/modules/notification/domain/model/message.go">
           <value>
             <ScannedPath>
-              <option name="lastModified" value="1771963201494" />
+              <option name="lastModified" value="1771964839070" />
               <option name="schema">
                 <list>
                   <option value="Message" />
                 </list>
               </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/modules/notification/module.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1771965615161" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/modules/notification/providers/firebase.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1771964466203" />
             </ScannedPath>
           </value>
         </entry>
@@ -1109,6 +1149,8 @@
         <entry key="file_saver" value="FileSaver" />
         <entry key="find_user_by_email_usecase" value="findUserByEmailUsecase" />
         <entry key="find_user_by_id_usecase" value="findUserByIDUsecase" />
+        <entry key="firebase" value="Firebase" />
+        <entry key="firebase_adaptor" value="FirebaseAdaptor" />
         <entry key="generate_jwt_usecase" value="generateJwtUsecase" />
         <entry key="get_me_handler" value="GetMeHandler" />
         <entry key="google_oauth_callback_usecase" value="googleOauthCallbackUsecase" />

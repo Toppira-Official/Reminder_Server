@@ -509,6 +509,9 @@ const docTemplate = `{
         "ErrCode": {
             "type": "string",
             "enum": [
+                "USER_INVALID_DATA",
+                "USER_ALREADY_EXISTS",
+                "USER_NOT_FOUND",
                 "AUTH_INVALID_TOKEN",
                 "AUTH_EXPIRED_TOKEN",
                 "AUTH_TOKEN_NOT_PROVIDED",
@@ -517,12 +520,12 @@ const docTemplate = `{
                 "SERVER_NOT_RESPONDING",
                 "TOO_MANY_REQUESTS",
                 "SERVICE_TEMPORARILY_UNAVAILABLE",
-                "Reminder_INVALID_DATA",
-                "USER_INVALID_DATA",
-                "USER_ALREADY_EXISTS",
-                "USER_NOT_FOUND"
+                "Reminder_INVALID_DATA"
             ],
             "x-enum-varnames": [
+                "ErrUserInvalidData",
+                "ErrUserAlreadyExists",
+                "ErrUserNotFound",
                 "ErrAuthInvalidToken",
                 "ErrAuthExpiredToken",
                 "ErrAuthTokenNotProvided",
@@ -531,10 +534,7 @@ const docTemplate = `{
                 "ErrServerNotResponding",
                 "ErrTooManyRequests",
                 "ErrServiceTemporarilyUnavailable",
-                "ErrReminderInvalidData",
-                "ErrUserInvalidData",
-                "ErrUserAlreadyExists",
-                "ErrUserNotFound"
+                "ErrReminderInvalidData"
             ]
         },
         "GetMeOutput": {

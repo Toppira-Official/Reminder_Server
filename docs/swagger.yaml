@@ -20,6 +20,9 @@ definitions:
     type: object
   ErrCode:
     enum:
+    - USER_INVALID_DATA
+    - USER_ALREADY_EXISTS
+    - USER_NOT_FOUND
     - AUTH_INVALID_TOKEN
     - AUTH_EXPIRED_TOKEN
     - AUTH_TOKEN_NOT_PROVIDED
@@ -29,11 +32,11 @@ definitions:
     - TOO_MANY_REQUESTS
     - SERVICE_TEMPORARILY_UNAVAILABLE
     - Reminder_INVALID_DATA
-    - USER_INVALID_DATA
-    - USER_ALREADY_EXISTS
-    - USER_NOT_FOUND
     type: string
     x-enum-varnames:
+    - ErrUserInvalidData
+    - ErrUserAlreadyExists
+    - ErrUserNotFound
     - ErrAuthInvalidToken
     - ErrAuthExpiredToken
     - ErrAuthTokenNotProvided
@@ -43,9 +46,6 @@ definitions:
     - ErrTooManyRequests
     - ErrServiceTemporarilyUnavailable
     - ErrReminderInvalidData
-    - ErrUserInvalidData
-    - ErrUserAlreadyExists
-    - ErrUserNotFound
   GetMeOutput:
     properties:
       user:

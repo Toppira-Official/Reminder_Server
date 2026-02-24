@@ -5,4 +5,4 @@ type FirebaseSubscriber struct {
 	UserID uint
 }
 
-func (FirebaseSubscriber) TableName() string { return "firebase_subscribers" }
+func (FirebaseSubscriber) TableName() string { return "Firebase_Subscribers" }

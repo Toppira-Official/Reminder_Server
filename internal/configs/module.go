@@ -15,6 +15,7 @@ var Module = fx.Module(
 		NewQuery,
 		GetGoogleOauthConfig,
 		NewRateLimiter,
+		GetElastic,
 	),
 	fx.Invoke(LoadMigrations),
 )

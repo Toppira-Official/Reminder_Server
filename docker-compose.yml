@@ -35,8 +35,27 @@ services:
       - "${ELASTIC_PORT}:9200"
     volumes:
       - es-data:/usr/share/elasticsearch/data
+    networks:
+      - reminder-net
+
+  kibana:
+    image: kibana:9.3.1
+    container_name: kibana
+    restart: unless-stopped
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=${ELASTIC_PASSWORD}
+    ports:
+      - "${KIBANA_PORT}:5601"
+    networks:
+      - reminder-net
 
 volumes:
   postgres_data:
   redis_data:
   es-data:
+
+networks:
+  reminder-net:
+    driver: bridge

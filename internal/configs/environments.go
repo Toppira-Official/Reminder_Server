@@ -25,6 +25,7 @@ type Environments struct {
 	ELASTIC_PASSWORD     Environment
 	ELASTIC_HOST         Environment
 	ELASTIC_PORT         Environment
+	KIBANA_PORT          Environment
 	JWT_SECRET           Environment
 	JWT_EXPIRES_IN_HOURS Environment
 	RATE_LIMIT_QPS       Environment
@@ -59,6 +60,7 @@ func GetEnvironments() Environments {
 		ELASTIC_PASSWORD:     Environment(os.Getenv("ELASTIC_PASSWORD")).orPanic(),
 		ELASTIC_HOST:         Environment(os.Getenv("ELASTIC_HOST")).orDefault("localhost"),
 		ELASTIC_PORT:         Environment(os.Getenv("ELASTIC_PORT")).orDefault("9200"),
+		KIBANA_PORT:          Environment(os.Getenv("KIBANA_PORT")).orDefault("5601"),
 		JWT_SECRET:           Environment(os.Getenv("JWT_SECRET")).orPanic(),
 		JWT_EXPIRES_IN_HOURS: Environment(os.Getenv("JWT_EXPIRES_IN_HOURS")).orPanic(),
 		RATE_LIMIT_QPS:       Environment(os.Getenv("RATE_LIMIT_QPS")).orPanic(),

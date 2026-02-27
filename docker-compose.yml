@@ -28,6 +28,7 @@ services:
     image: dhi.io/elasticsearch:9
     container_name: elasticsearch
     restart: unless-stopped
+    user: "1000:1000"
     environment:
       - network.host=0.0.0.0
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
